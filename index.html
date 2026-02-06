@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Eurex Exam">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="Eurex Trader Exam Preparation - 105 Official Questions">
+  
+  <title>Eurex Trader Exam</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- iOS Icons -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a0f' width='100' height='100' rx='20'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%2300d4ff'>📈</text></svg>">
+  
+  <style>
+    * { 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+      color: #e8e8e8;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+    
+    html {
+      height: -webkit-fill-available;
+    }
+    
+    #root {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .btn {
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      touch-action: manipulation;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+      color: #0a0a0f;
+    }
+    
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .btn-secondary:active {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .option {
+      padding: 16px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 2px solid transparent;
+      background: rgba(255, 255, 255, 0.04);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      touch-action: manipulation;
+    }
+    
+    .option:active {
+      transform: scale(0.99);
+    }
+    
+    .option.selected {
+      background: rgba(0, 212, 255, 0.15);
+      border-color: #00d4ff;
+    }
+    
+    .option.correct {
+      background: rgba(0, 255, 136, 0.15);
+      border-color: #00ff88;
+    }
+    
+    .option.incorrect {
+      background: rgba(255, 71, 87, 0.15);
+      border-color: #ff4757;
+    }
+    
+    .checkbox, .radio {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .radio { border-radius: 50%; }
+    
+    .checkbox.checked, .radio.checked {
+      background: #00d4ff;
+      border-color: #00d4ff;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00d4ff 0%, #00ff88 100%);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      touch-action: manipulation;
+    }
+    
+    .nav-dot.current { background: #00d4ff; color: #0a0a0f; }
+    .nav-dot.answered { background: rgba(0, 212, 255, 0.3); }
+    .nav-dot.bookmarked { border-color: #ffd700; border-width: 2px; }
+    
+    .tag {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .tag-tf { background: rgba(147, 51, 234, 0.2); color: #a78bfa; }
+    .tag-sc { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .tag-mc { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+    
+    select {
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e8e8e8;
+      font-size: 14px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+    
+    select:focus { 
+      outline: none; 
+      border-color: #00d4ff; 
+    }
+    
+    .stat-card {
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+    
+    .timer {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+      font-size: 20px;
+      font-weight: 600;
+      color: #00d4ff;
+    }
+    
+    .timer.warning { color: #ffd700; }
+    .timer.danger { color: #ff4757; animation: pulse 1s infinite; }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .install-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 212, 255, 0.95);
+      color: #0a0a0f;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    
+    .safe-area-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <!-- Register Service Worker for offline support -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.log('SW registration failed'));
+      });
+    }
+  </script>
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // Complete question database from Eurex Trader Exam (105 questions)
+    const questionsData = [
+      // 1.1 Exchange Rules
+      { id: 1, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "What tasks and rights do the Trading Surveillance Office have?", options: ["Impose sanctions on breaking the rules", "Systematically and completely collect all data regarding futures and options trading", "Demand information from trading participants insofar as it is necessary to fulfill its duties", "Right to access the business premises of the trading participants during regular working hours"], correctAnswers: [1, 2, 3] },
+      { id: 2, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "What sanctions can the Disciplinary Committee impose in case of a rule violation?", options: ["Imposing a fine against an exchange trader for breaching the crossing rules", "Excluding an exchange participant from trading for up to 30 trading days", "Withdrawing an exchange trader admission", "Reprimanding an exchange trader"], correctAnswers: [0, 1, 2, 3] },
+      { id: 3, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "Which issues are sanctioned by the Disciplinary Committee?", options: ["Order entries which can potentially affect an artificial price level", "Trades based on insider information", "Knowingly entry of opposite orders in continuous trading by one exchange trader without trade request", "Trades that lead to erroneous signals for bid and ask"], correctAnswers: [0, 2, 3] },
+      { id: 4, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which of the following is not a task of the Trading Surveillance Office?", options: ["Sanctioning of exchange traders for breaking exchange related rules", "Collecting all data regarding futures and options trading", "Monitoring the settlement of exchange transactions", "Informing the Exchange Supervisory Authority if an exchange participant has breached exchange related rules"], correctAnswers: [0] },
+      { id: 5, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "What is the Trading Surveillance Office not allowed to do in connection with the performance of its duties?", options: ["Conduct inspections of business premises of exchange participants", "Demand information", "Suspend trading if insider trading is suspected", "Inform the Board of Management if it is suspected that an exchange participant has breached exchange related rules"], correctAnswers: [2] },
+      { id: 6, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which statement in connection with the Trading Surveillance Office or the Disciplinary Committee is correct?", options: ["The Trading Surveillance Office can exclude exchange traders from trading up to 30 trading days.", "The Disciplinary Committee has the right to withdraw an exchange trader´s admission to trading.", "The Trading Surveillance Office decides on the suspension of trading.", "None of the above."], correctAnswers: [1] },
+      { id: 7, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "It is forbidden to enter orders into the system without an intention to trade.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 8, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "Orders which are not in line with common market practice are unproblematic in terms of the market integrity clause, the clause is applied to trades only.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 9, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "In order to ensure orderly futures and options trading, trading surveillance office verifies electronic trading strategies and trading algorithms of an exchange participant prior to the application.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 10, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "When can the management board of the exchange instruct cash settlement instead of physical delivery upon the exercise of stock options?", options: ["To maintain orderly market conditions", "Due to a high number of options in the money", "In case of a delisting of the underlying", "Due to a temporarily trading suspension of the underlying"], correctAnswers: [0, 2, 3] },
+      { id: 11, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "Which measures can the management board of the exchange take in case of an underlying is delisted?", options: ["Replacement of the underlying for open positions", "Cash settlement instead of physical delivery", "Discontinuation of trading and early termination of affected derivatives transactions", "Automatically close open positions and reopen them in an equivalent underlying"], correctAnswers: [0, 1, 2] },
+      { id: 12, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "When can the management board of the exchange suspend trading in futures and options contracts?", options: ["If orderly exchange trading appears to be temporarily threatened", "If an exchange participant has technical problems", "In order to protect the public", "If the trading surveillance office suspects insider trading in a product"], correctAnswers: [0, 2, 3] },
+      { id: 13, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "What is the purpose of position limits in trading?", options: ["They are the basis for margin calculation.", "To avoid a delivery bottleneck in the underlying for contracts with physical delivery", "They define the entitlement to the default fund.", "To avoid volatile market situations"], correctAnswers: [1] },
+      { id: 14, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "What are position limits?", options: ["A minimum number of contracts in a product which an exchange participant must hold for its own account or for one of its customers", "A maximum number of contracts in a product which an exchange participant is permitted to hold for its own account or for one of its customers", "A volume weighted average price for contracts in a product which an exchange participant may not exceed for its own account or for one of its customers", "None of the above."], correctAnswers: [1] },
+      { id: 15, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which statement regarding an exceeded position limit is wrong?", options: ["Immediate reduction of the position to discontinue the exceeding of the position limit.", "If positions are not reduced within a period of time determined by the management board of Eurex Deutschland, the management board can take measures to reduce the relevant positions.", "Upon request by the trading surveillance office, an exchange participant must provide evidence with regard to a single position of its customer account, irrespective of a position limit being exceeded.", "A position reduction must be carried out until 14:00 CET of the next trading day."], correctAnswers: [3] },
+      { id: 16, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "What is the procedure in accordance with the exchange rules, if physical delivery for futures contracts is excluded?", options: ["The positions will be closed out at the last traded price before the exclusion of physical delivery was announced.", "All rights and obligations shall be deemed to be performed upon the last daily settlement payment.", "The opening price of the previous day is used as settlement price.", "None of the above."], correctAnswers: [1] },
+      { id: 17, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which statement in connection with a suspension of futures and options trading is correct?", options: ["During the suspension it is possible to enter orders.", "Only existing quotes will be deleted.", "All existing orders and quotes will be deleted.", "It is possible to enter orders and quotes during the suspension."], correctAnswers: [2] },
+      { id: 18, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which statement in connection with a suspension of futures and options trading is wrong?", options: ["All existing orders and quotes will be deleted.", "It is not possible to exercise open positions.", "It is not possible to close out open positions.", "Futures and options trading is resumed within the trading phase in which the suspension was triggered."], correctAnswers: [3] },
+      { id: 19, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "What is regulated by the market integrity clause of the Eurex Exchange Rules?", options: ["Anonymity of the order book", "Equal technical access for all exchange participants", "Prohibition of entering orders in the trading system, which have the potential to influence the price in an erroneous or misleading way", "Tasks of the trading surveillance office"], correctAnswers: [2] },
+      { id: 20, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which statement regarding the order to trade ratio is wrong?", options: ["Trading participants are obligated to ensure an adequate ratio between order entries and contracts traded.", "Trading participants are obligated to ensure an adequate ratio between order modifications and contracts traded.", "Trading participants are obligated to ensure an adequate ratio between quote entries and contracts traded.", "Trading participants are obligated to ensure an adequate ratio between limit and market orders."], correctAnswers: [3] },
+      { id: 21, chapter: "1.1", section: "Exchange Rules", type: "SC", question: "Which special provisions apply to algorithmic orders and quotes?", options: ["They must be marked in the trading system.", "The trader, who is responsible for the entry, needs an additional qualification.", "They are only allowed in continuous trading but not in auctions.", "It is not allowed to enter them during fast market status."], correctAnswers: [0] },
+      { id: 22, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "Each exchange participant is always obliged to ensure the presence of an enough qualified personnel on its business premises and telephone availability during all trading periods (without \"extended trading period\").", options: ["True", "False"], correctAnswers: [0] },
+      { id: 23, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "The board of management of the exchange takes appropriate measures for emergency planning and management for each exchange participant.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 24, chapter: "1.1", section: "Exchange Rules", type: "TF", question: "Each exchange participant is obliged to name a contact person for the event of a technical disruption.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 25, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "Which possibilities do exchange traders have if their participant trading system is temporarily non-functional?", options: ["Use of the \"Trading-on-behalf\" service to enter, modify or delete orders by Derivatives Trading Operations.", "Use of the mass deletion functionality", "Use of another trader ID of the company which is not affected by this technical problem", "Use of the emergency location offered by Eurex Deutschland."], correctAnswers: [0, 1] },
+      { id: 26, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "Which statements about the short code regime are correct?", options: ["The Long Code assigned to a Short Code must be reported latest to Eurex by the end of the trading day following the trading day on which the Short Code was first used.", "Only one Short Code may be assigned to one Long Code.", "A Short Code is a unique numeric identifier which can be changed subsequently or during the day and which is permanently assigned to a Long Code by a Trading Participant.", "A Short Code is a unique numeric Identifier which cannot be changed subsequently or during the day and which is permanently assigned to a Long Code by a Trading Participant."], correctAnswers: [0, 3] },
+      { id: 27, chapter: "1.1", section: "Exchange Rules", type: "MC", question: "Which statements regarding trading system access are correct?", options: ["An admitted exchange trader obtains a personal user ID which may not be passed on.", "By passing the trader examination an access code to the trading system is automatically assigned to the trader.", "A DMA Provider is obliged to flag orders which are entered by an DMA User via direct market access.", "The use of an order routing system by internal employees/trading assistants who are not admitted as Eurex exchange traders is not permitted."], correctAnswers: [0, 2] },
+      // 1.2 Trading Conditions
+      { id: 28, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "Cross-IDs for the Market-wide Self-Match Prevention functionality will be assigned by the exchange.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 29, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "To avoid a pre-arranged trade from breaching the rules, a trade request must always be entered beforehand.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 30, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "Two orders of an exchange participant which are entered knowingly and could immediately be executed against each other, are only admissible if one individual involved has entered a rule-consistent trade request in advance.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 31, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which statement regarding cross trades in continuous trading is correct?", options: ["They are admissible, if there was no knowledge about the immediate executable orders.", "Knowing entry of opposite orders which are immediately executable is admissible, if a rule-consistent trade request has been entered before.", "When a trade request is placed, order entry must be performed in a predefined time window so that a cross trade is admissible.", "All answers are correct."], correctAnswers: [3] },
+      { id: 32, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which statement regarding pre-arranged trades is correct?", options: ["They are in any case prohibited.", "They are only prohibited in the opening auction.", "They are permissible if a trade request has been placed immediately after the trade.", "They are permissible if one individual involved has entered a rule-consistent trade request prior to the order entry."], correctAnswers: [3] },
+      { id: 33, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which functionality can be used to avoid crossings in continuous trading?", options: ["Match request", "Quote request", "Self-Match prevention", "None of the above."], correctAnswers: [2] },
+      { id: 34, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "In case of option transactions concluded in the opening auction and outside the mistrade range, a price correction is always conducted despite the request for cancellation.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 35, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "If the minimum damage is 25,000 €, a mistrade application can be submitted up to 3 hours after the conclusion of the transaction (but before expiration of 30 minutes after termination of the trading period of the respective product on the trading day).", options: ["True", "False"], correctAnswers: [0] },
+      { id: 36, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "All business parties i.e. the discriminated and the benefited exchange participant are entitled to submit a mistrade application.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 37, chapter: "1.2", section: "Trading Conditions", type: "MC", question: "Which of the following statements in connection with a cancellation of a transaction are correct?", options: ["The application has always to be submitted within 30 minutes after the transaction was concluded.", "In order that the trading surveillance office cancels a transaction, the price of the transaction must deviate more than the mistrade range from the reference price.", "The management board of the exchange determines the mistrade ranges.", "If the minimum damage exceeds €25,000, a mistrade application can be submitted after 30 minutes of the conclusion of the transaction."], correctAnswers: [2, 3] },
+      { id: 38, chapter: "1.2", section: "Trading Conditions", type: "MC", question: "Which of the following statements in connection with a cancellation of a transaction are correct, if the mistrade application is submitted within 30 minutes after conclusion of the transaction?", options: ["The benefited exchange participant can always choose between cancelation of the transaction or price correction.", "All business parties are entitled to submit a mistrade application.", "In case of option transactions concluded in the opening auction the benefited exchange participant can choose between cancelation of the transaction or price correction.", "In order that the management board of the exchange cancels a transaction, the price of the transaction must deviate from the reference price by more than the mistrade range."], correctAnswers: [1, 2, 3] },
+      { id: 39, chapter: "1.2", section: "Trading Conditions", type: "MC", question: "Which details are mandatory for a mistrade application?", options: ["Time of execution (matching) of the order or quote", "Name of contract", "Price of executed transaction", "Company of applicant and name of exchange trader including Eurex user ID"], correctAnswers: [0, 1, 2, 3] },
+      { id: 40, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "If an off-book trade is concluded via the T7 Entry Service (TES trade), the TES offer conditions have to be entered within a specified time limit by an exchange participant after the agreement to conclude the trade at Eurex Deutschland.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 41, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "The TES offer conditions have to be confirmed by the counterparty within a specified time limit after the entry.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 42, chapter: "1.2", section: "Trading Conditions", type: "TF", question: "Eurex EnLight is a selective request-for-quote service which enables a trading participant (\"requester\") to call for offers from one or more trading participants (\"responders\") for the conclusion of one or several off-book trades.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 43, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which statement regarding TES trades is correct?", options: ["There are no contract specifications for futures and options.", "Trades are concluded outside the central order book.", "Trades do result in an exchange price.", "There is no time limit for entering off-book trades into the T7 Entry Service after the counterparties have agreed on the trade."], correctAnswers: [1] },
+      { id: 44, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which statement does not apply to Eurex EnLight transactions?", options: ["A requester can call for firm or indicative quotes to buy or sell off-book instruments from one or more respondents.", "Eurex EnLight trades are displayed in the daily reports generated by the Eurex system and are marked as on-book trades.", "The requester can accept one or more quotes from one or more responders in a request-for-quotes session.", "Eurex EnLight transactions may be cancelled by the Board of Management of Eurex Deutschland in the event of erroneous or incorrect entries if all Exchange Participants involved agree."], correctAnswers: [1] },
+      { id: 45, chapter: "1.2", section: "Trading Conditions", type: "SC", question: "Which statement regarding off-book trades (T7 Entry Service) is correct?", options: ["The TES offer conditions have to be confirmed within the specified time limit after entry.", "The TES offer conditions can also be entered by an exchange participant who is not involved as counterparty in the trade.", "The TES offer conditions can only be confirmed by the exchange participants involved in the trade.", "All answers are correct."], correctAnswers: [3] },
+      // 2.1 Trading Process
+      { id: 46, chapter: "2.1", section: "Trading Process", type: "TF", question: "Separate order books are maintained for complex (combined) instruments.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 47, chapter: "2.1", section: "Trading Process", type: "TF", question: "In off-book trading, orders and quotes are matched automatically.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 48, chapter: "2.1", section: "Trading Process", type: "TF", question: "The contract identification concept based on day-month-year notation allows sub-monthly expirations.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 49, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements are true?", options: ["In on-book trading, the order book is anonymous.", "Complex instruments may only be traded off-book.", "Only limit orders are supported.", "During periods of stressed market conditions, other values may apply to certain parameters."], correctAnswers: [0, 3] },
+      { id: 50, chapter: "2.1", section: "Trading Process", type: "MC", question: "What instrument status can a complex (combined) instrument have?", options: ["Continuous", "Book", "Auction", "Closed"], correctAnswers: [0, 1, 3] },
+      { id: 51, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements regarding complex (combined) instruments are true?", options: ["They are exclusively defined by the Exchange.", "Not all order types are supported.", "They are only available in off-book trading.", "They consist of various simple instruments (legs)."], correctAnswers: [1, 3] },
+      { id: 52, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements regarding products and instruments are true?", options: ["Products can contain contracts with sub-monthly expirations.", "Simple instruments of the same product generally have identical trading parameters for order book trading.", "Each maturity of a futures contract represents an instrument.", "Each instrument has an ISIN code."], correctAnswers: [0, 1, 2] },
+      { id: 53, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements regarding the Auction instrument status are true?", options: ["Orders and quotes can be entered.", "A closing auction is carried out for all products.", "The potential auction price (or the best bid/ask limit) is published.", "Orders and quotes cannot be modified."], correctAnswers: [0, 2] },
+      { id: 54, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements do not apply to Continuous instrument status?", options: ["Only the best bid limit and the best ask limit are published (\"top of book\").", "Market data is published on an aggregated basis (per limit).", "Continuous trading is interrupted by an intraday auction.", "For certain instruments, continuous trading may be interrupted by a volatility auction."], correctAnswers: [0, 2] },
+      { id: 55, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements regarding the Book (Pre- and Post-Trading) instrument status are true?", options: ["The potential auction price (or the best bid/ask limit) is published.", "Quotes cannot be entered.", "No current market data is published.", "Orders can be modified."], correctAnswers: [1, 2, 3] },
+      { id: 56, chapter: "2.1", section: "Trading Process", type: "MC", question: "Which statements regarding continuous trading are true?", options: ["It starts with an auction phase for all instruments (simple and complex).", "In the event of a crossed order book, uncrossing takes place prior to the start of continuous trading.", "Several allocation methods are used for order execution.", "Market data is published on an aggregated basis (per limit)."], correctAnswers: [1, 2, 3] },
+      { id: 57, chapter: "2.1", section: "Trading Process", type: "MC", question: "What are the allocation methods in continuous trading?", options: ["Price/time priority", "Volume/time priority", "Pro-rata allocation", "Time/pro-rata allocation"], correctAnswers: [0, 2, 3] },
+      { id: 58, chapter: "2.1", section: "Trading Process", type: "SC", question: "What applies to instrument status Restricted?", options: ["Instruments enter the state Restricted when the respective product is set to Halt.", "Quotes are automatically deleted.", "No current market data is published.", "All answers are correct."], correctAnswers: [3] },
+      { id: 59, chapter: "2.1", section: "Trading Process", type: "SC", question: "What statement does not apply to Closed (Start of Day/End of Day) instrument status?", options: ["No current market data is published.", "Quotes are automatically deleted.", "Orders can be modified.", "No matching takes place."], correctAnswers: [2] },
+      { id: 60, chapter: "2.1", section: "Trading Process", type: "SC", question: "When is the T7 Entry Service (TES) available during the trading day?", options: ["During the product-specific off-book trading period specified in the contract specifications.", "From the start of the (on-book) pre-trading period.", "Only during the (on-book) post-trading period.", "Only after the (on-book) closing period."], correctAnswers: [0] },
+      { id: 61, chapter: "2.1", section: "Trading Process", type: "SC", question: "Which statement regarding End-of-Day Processing is false?", options: ["Pending TES trades are deleted.", "Pending TES trades are transferred to the next business day.", "Orders whose validity has elapsed are deleted.", "Contracts which have reached their expiry/maturity date are deleted."], correctAnswers: [1] },
+      { id: 62, chapter: "2.1", section: "Trading Process", type: "SC", question: "Which statement regarding Fast Market status is correct?", options: ["Non-persistent orders are deleted.", "Quotes are automatically deleted.", "Wider price corridors apply to validation upon order entry.", "All instruments are in Restricted status."], correctAnswers: [2] },
+      { id: 63, chapter: "2.1", section: "Trading Process", type: "SC", question: "Which status does not exist?", options: ["Holiday", "Halt", "Book", "All of the above exist."], correctAnswers: [3] },
+      // 2.2 Orders
+      { id: 64, chapter: "2.2", section: "Orders", type: "TF", question: "In options contracts, market orders can be entered in continuous trading without any restrictions.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 65, chapter: "2.2", section: "Orders", type: "TF", question: "It is not possible to enter stop orders for equity options.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 66, chapter: "2.2", section: "Orders", type: "TF", question: "A market order in a Fixed Income Futures product cannot be entered with the restriction BOC (Book-or-Cancel).", options: ["True", "False"], correctAnswers: [0] },
+      { id: 67, chapter: "2.2", section: "Orders", type: "MC", question: "Which statements apply to Immediate-Or-Cancel (IOC) orders?", options: ["IOC orders are executed immediately and in full, or to the extent possible.", "Any unexecuted parts are entered into the order book.", "Any unexecuted parts of the order are cancelled immediately.", "IOC orders are not available for futures contracts."], correctAnswers: [0, 2] },
+      { id: 68, chapter: "2.2", section: "Orders", type: "MC", question: "Which statements apply to order entry?", options: ["A Client ID must always be assigned.", "No new orders can be entered during a volatility auction.", "It must be flagged whether the order is a customer order or a proprietary order.", "Not all order types can be used for each instrument."], correctAnswers: [2, 3] },
+      { id: 69, chapter: "2.2", section: "Orders", type: "MC", question: "Which statements are true, at the time of order entry, for One-Cancels-the-Other (OCO) orders?", options: ["The stop limit of a sell OCO order must be higher than the highest bid limit in the order book.", "The stop limit of a sell OCO order must be lower than its limit, and lower than the best ask limit in the order book.", "It has a limit and stop limit.", "No further validity constraints are possible."], correctAnswers: [1, 2] },
+      { id: 70, chapter: "2.2", section: "Orders", type: "MC", question: "Which of the following orders can be entered in a futures contract in continuous trading if the last traded price is 5056.5?", options: ["Buy market order for 10 contracts, Immediate-Or-Cancel (IOC)", "Stop buy order for 10 contracts, stop limit 5123.5", "Stop sell order for 10 contracts, stop limit 5066", "Sell limit order for 10 contracts at 5090, Good-till-Cancelled (GTC)"], correctAnswers: [0, 1, 3] },
+      { id: 71, chapter: "2.2", section: "Orders", type: "MC", question: "Which of the following orders can be entered in an ODAX contract in continuous trading if the last traded price is 50.6?", options: ["Buy market order for 10 contracts if on the opposite order book side is at least one order or quote.", "Stop buy order for 10 contracts, stop limit 59", "Buy limit order for 10 contracts at 58, Immediate-Or-Cancel (IOC)", "Buy limit order for 10 contracts at 28, Good-till-Cancelled (GTC)"], correctAnswers: [0, 2, 3] },
+      { id: 72, chapter: "2.2", section: "Orders", type: "MC", question: "Which order attributes are mandatory?", options: ["Open/Close indicator", "Client ID for customer orders", "Limit", "Algo ID, provided that the investment decision was predominantly taken by an algorithm"], correctAnswers: [1, 3] },
+      { id: 73, chapter: "2.2", section: "Orders", type: "MC", question: "How are stop orders triggered?", options: ["Based on the best bid or ask limit", "Based on the last (traded) price", "Based on auction prices (including the closing auction)", "All buy stop orders and sell stop orders having the same stop limit are triggered simultaneously."], correctAnswers: [1, 2, 3] },
+      { id: 74, chapter: "2.2", section: "Orders", type: "SC", question: "Which statement does not apply to Book-or-Cancel (BOC) orders?", options: ["They are never executed immediately upon entry.", "They must have a limit.", "They can be entered as limit orders or market orders.", "No further order restrictions are possible."], correctAnswers: [2] },
+      { id: 75, chapter: "2.2", section: "Orders", type: "SC", question: "Which order type is not available?", options: ["Volatility Auction Only", "Opening Auction Only", "Closing Auction Only", "Auction Only"], correctAnswers: [0] },
+      { id: 76, chapter: "2.2", section: "Orders", type: "SC", question: "Which attribute is mandatory for client orders?", options: ["Flagging that it is a customer order", "Client ID as short code", "Number of contracts", "All answers are correct."], correctAnswers: [3] },
+      { id: 77, chapter: "2.2", section: "Orders", type: "SC", question: "Which attribute is not mandatory for proprietary orders?", options: ["Flagging that it is a proprietary order", "Client ID as short code", "Execution ID (Algo ID or short code for national ID of the trader)", "Investment ID"], correctAnswers: [1] },
+      { id: 78, chapter: "2.2", section: "Orders", type: "SC", question: "Which statement regarding the flagging of algorithmic orders is false?", options: ["Trading participants must confirm that all installed algorithms have successfully passed the tests required by MiFID II regulations.", "The \"Execution Identifier\" must contain the Algo ID.", "The Algo ID is allocated by the Exchange.", "Eurex Deutschland must provide data identifying the algorithm to BaFin (Federal Financial Supervisory Authority)."], correctAnswers: [2] },
+      // 2.3 Protection Mechanisms
+      { id: 79, chapter: "2.3", section: "Protection Mechanisms", type: "TF", question: "An extreme price deviation in a complex instrument triggers a volatility interruption.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 80, chapter: "2.3", section: "Protection Mechanisms", type: "TF", question: "The parameters for volatility interruptions are set in a way that volatility interruptions only occur in extreme market situations.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 81, chapter: "2.3", section: "Protection Mechanisms", type: "TF", question: "Volatility interruptions are only triggered in simple futures instruments.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 82, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "Which protection mechanisms are generally available?", options: ["Dynamic Volatility interruption – if the potential execution price deviates extremely from the last traded price", "Volatility interruption – if the price of a new trade deviates extremely from the last traded price", "Static Volatility interruption – if the potential execution price deviates extremely from the static reference price", "Market Order Matching Range"], correctAnswers: [0, 2, 3] },
+      { id: 83, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "Which pre-trade checks is a trading venue required to perform, pursuant to MiFID II?", options: ["Upon entry, limit orders must be validated against defined price corridors.", "A maximum order value must be defined for each trader.", "A maximum quantity per order must be defined for each trader.", "The principle of dual control must be observed when entering market orders."], correctAnswers: [0, 2] },
+      { id: 84, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "Which statements apply to volatility interruptions (volatility auctions)?", options: ["The order book is fully visible during the volatility auction.", "During a volatility auction, the best bid and best ask limit or the potential auction price is/are published.", "The parameters (price corridors and time intervals) which are used to validate a potential execution price are not published.", "Matching/uncrossing takes place in the same way as with a regular auction."], correctAnswers: [1, 3] },
+      { id: 85, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "Which obligations must a Regulated Market Maker fulfil?", options: ["Quoting during stressed market conditions and in exceptional circumstances", "Posting firm, simultaneous two-way quotes in at least one product", "Participation during at least 80% of continuous trading hours", "Participation during at least 50% of continuous trading hours"], correctAnswers: [1, 3] },
+      { id: 86, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "Which statements regarding Market Making are correct?", options: ["No quotation obligations apply if the Exchange's Management Board has announced exceptional circumstances.", "Firm, simultaneous two-way quotes must be quoted in at least one product.", "A distinction is made between Regulated Market Maker and a Eurex Liquidity Provider.", "Liquidity Providers may choose between various Market Making building blocks."], correctAnswers: [0, 1, 2] },
+      { id: 87, chapter: "2.3", section: "Protection Mechanisms", type: "MC", question: "A trading venue must define requirements for certain market conditions, as a prerequisite for the provision of additional liquidity. Which statements are true?", options: ["The Exchange's Management Board decides on whether exceptional circumstances prevail and makes a corresponding announcement (via a Newsboard Message).", "No quotation obligations apply during stressed market conditions.", "Less stringent quotation obligations apply for Liquidity Providers during stressed market conditions.", "No quotation obligations apply during exceptional circumstances."], correctAnswers: [0, 2, 3] },
+      // 2.4 Matching
+      { id: 88, chapter: "2.4", section: "Matching", type: "TF", question: "If an opening price has been determined in a futures contract, all existing market orders are executed at this price.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 89, chapter: "2.4", section: "Matching", type: "TF", question: "No time priority applies to Equity Index Futures contracts in continuous trading.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 90, chapter: "2.4", section: "Matching", type: "TF", question: "The Market Order Matching Range is active for futures and options contracts.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 91, chapter: "2.4", section: "Matching", type: "MC", question: "Which statements regarding on-book matching are correct?", options: ["Product-specific allocation methods apply in continuous trading.", "Price/time priority applies to all products in continuous trading.", "The order book is open during auctions, with accumulated volumes shown for each limit.", "The principle of maximum volume execution applies during auctions."], correctAnswers: [0, 3] },
+      { id: 92, chapter: "2.4", section: "Matching", type: "MC", question: "Which statements regarding on-book matching are correct?", options: ["The same price-determination rules apply to continuous trading and to auctions.", "Partial executions are possible in continuous trading and in auctions.", "Auction prices are determined in accordance with the principle of maximum volume execution.", "An exchange price can only be determined if a Regulatory Market Maker quote was involved in price determination."], correctAnswers: [1, 2] },
+      { id: 93, chapter: "2.4", section: "Matching", type: "MC", question: "Which basic principles apply to on-book matching?", options: ["Special rules apply to market orders in continuous trading.", "The principle of maximum volume execution applies during auctions.", "During continuous trading, each new incoming order is immediately checked for executability, and matched to the extent possible.", "Orders are always executed according to the price/time priority."], correctAnswers: [0, 1, 2] },
+      { id: 94, chapter: "2.4", section: "Matching", type: "SC", question: "Which statement does not apply to auction price determination?", options: ["Following the price determination/uncrossing, the best bid limit is lower than the best ask limit.", "The auction price is not lower than the best bid limit, and not higher than the best ask limit remaining in the order book following price determination.", "All existing market orders are executed.", "Market orders have priority over limit orders."], correctAnswers: [2] },
+      { id: 95, chapter: "2.4", section: "Matching", type: "SC", question: "How will a new incoming buy market order for 30 futures contracts be executed in continuous trading? Price/time priority applies; the Market Order Matching Range is 10 points.", options: ["No execution; the market order is added to the order book.", "No execution; the market order will be rejected.", "6 contracts at 12,510", "6 contracts at 12,510, 3 contracts at 12,511, and 9 contracts at 12,513"], correctAnswers: [3] },
+      { id: 96, chapter: "2.4", section: "Matching", type: "SC", question: "How will a new incoming buy limit order for 6 futures contracts, with a limit of 12,518, be executed in continuous trading? Price/time priority applies; the Market Order Matching Range is 10 points. The last traded price was 12,511.", options: ["6 contracts at 12,510", "6 contracts at 12,518", "Not at all; the market order in the order book is partially executed (18 contracts).", "6 contracts at 12,511"], correctAnswers: [0] },
+      { id: 97, chapter: "2.4", section: "Matching", type: "SC", question: "How will a new incoming buy limit order for 20 options contracts, with a limit of 4.11, be executed in continuous trading? Price/time priority applies; the last traded price was 4.08.", options: ["20 contracts at 3.16", "20 contracts at 4.08", "20 contracts at 4.11", "Not at all."], correctAnswers: [3] },
+      { id: 98, chapter: "2.4", section: "Matching", type: "SC", question: "In which case can no auction price be determined?", options: ["If the potential auction price is outside the Market Order Matching Range.", "If only market orders exist on both sides of the order book.", "If the Exchange's Management Board has determined a Fast Market period.", "If the auction price triggers stop orders."], correctAnswers: [1] },
+      { id: 99, chapter: "2.4", section: "Matching", type: "SC", question: "Which auction price is determined in the following order book, and how many contracts are executed? The tick size is 0.5 points.", options: ["7 contracts at 12,499.37", "7 contracts at 12,499.50", "5 contracts at 12,499", "7 contracts at 12,499"], correctAnswers: [1] },
+      { id: 100, chapter: "2.4", section: "Matching", type: "SC", question: "Which allocation method is used when all orders on a price level are proportionally allocated according to their sizes at the time of an execution?", options: ["Price/time priority", "Volume/time priority", "Pro-rata allocation", "Time/pro-rata allocation"], correctAnswers: [2] },
+      { id: 101, chapter: "2.4", section: "Matching", type: "SC", question: "How does allocation take place in continuous trading, if several matching orders are executable in a Money Market Futures contract, with different contract quantities?", options: ["Price/time priority", "Volume/time priority", "Pro-rata allocation", "Time/pro-rata allocation"], correctAnswers: [3] },
+      { id: 102, chapter: "2.4", section: "Matching", type: "SC", question: "The following three orders are executable against a new incoming order for 25 contracts in continuous trading. How does allocation take place under pro-rata matching? The sequence of orders shows their time priority.", options: ["Order #1: 20 contracts, Order #2: 5 contracts", "Order #3: 25 contracts", "Order #1: 6 contracts, order #2: 5 contracts, order #3: 14 contracts", "None of the above answers are correct."], correctAnswers: [3] },
+      { id: 103, chapter: "2.4", section: "Matching", type: "SC", question: "Which functionality does Eurex Improve include?", options: ["Eurex Improve Orders can be used to offset surpluses during auctions.", "During Stressed Market, Market Makers must respond to Improve Requests within 15 seconds.", "Customer orders for which an Improve Request has been initiated will be executed in full at a determined price or better.", "Eurex Improve supports Netting of off-book trades."], correctAnswers: [2] },
+      { id: 104, chapter: "2.4", section: "Matching", type: "SC", question: "What steps are required for a Eurex Improve Matching?", options: ["A client must agree with its trading participant on all the details of the trade that the client wishes to have executed in the order book.", "During the price improvement period, all trading participants (except for the trader who initiated the Improve request) can submit additional orders to the orderbook, in an aim to participate in the execution of the customer order.", "As soon as the price improvement period is finished, the Improve Request is executed in the order book.", "All the above-mentioned steps."], correctAnswers: [3] },
+      { id: 105, chapter: "2.4", section: "Matching", type: "SC", question: "Which statement does not apply to Eurex Improve?", options: ["The client on whose behalf an Improve Request is initiated is guaranteed full execution of the entire order at a predetermined price or better.", "The trading participant who initiates an Improve Request can automatically guarantee its client a best execution in accordance with MiFID II for the corresponding order.", "Improve Request are not published.", "By responding to an Improve Request, other trading participants have the opportunity to participate in the client order flow that might otherwise have been executed without their participation."], correctAnswers: [1] }
+    ];
+
+    // Storage helpers
+    const Storage = {
+      get: (key, defaultVal) => {
+        try {
+          const item = localStorage.getItem('eurex_' + key);
+          return item ? JSON.parse(item) : defaultVal;
+        } catch { return defaultVal; }
+      },
+      set: (key, value) => {
+        try {
+          localStorage.setItem('eurex_' + key, JSON.stringify(value));
+        } catch {}
+      }
+    };
+
+    // Scoring
+    const SCORING = { TF: { correct: 2 }, SC: { correct: 2 }, MC: { perOption: 1, maxPoints: 4 } };
+    const TYPE_INFO = {
+      TF: { name: "True/False", desc: "Judge whether the statement is true or false" },
+      SC: { name: "Single Choice", desc: "Select the ONE correct answer" },
+      MC: { name: "Multiple Choice", desc: "Select ALL correct answers" }
+    };
+
+    const shuffleArray = (array) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+
+    function EurexQuizApp() {
+      const [mode, setMode] = useState('home');
+      const [questions, setQuestions] = useState([]);
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showAnswer, setShowAnswer] = useState(false);
+      const [filter, setFilter] = useState({ chapter: 'all', type: 'all' });
+      const [examTime, setExamTime] = useState(20 * 60);
+      const [examStarted, setExamStarted] = useState(false);
+      const [bookmarked, setBookmarked] = useState(() => new Set(Storage.get('bookmarks', [])));
+      const [stats, setStats] = useState(() => Storage.get('stats', { studied: 0, exams: 0, bestScore: 0 }));
+      const [showInstall, setShowInstall] = useState(false);
+      const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+      // PWA install prompt
+      useEffect(() => {
+        const handler = (e) => {
+          e.preventDefault();
+          setDeferredPrompt(e);
+          setShowInstall(true);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+      }, []);
+
+      const installApp = async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') setShowInstall(false);
+          setDeferredPrompt(null);
+        }
+      };
+
+      // Save bookmarks
+      useEffect(() => {
+        Storage.set('bookmarks', [...bookmarked]);
+      }, [bookmarked]);
+
+      // Save stats
+      useEffect(() => {
+        Storage.set('stats', stats);
+      }, [stats]);
+
+      const filteredQuestions = useMemo(() => {
+        return questionsData.filter(q => {
+          if (filter.chapter !== 'all' && q.chapter !== filter.chapter) return false;
+          if (filter.type !== 'all' && q.type !== filter.type) return false;
+          return true;
+        });
+      }, [filter]);
+
+      // Timer
+      useEffect(() => {
+        let timer;
+        if (mode === 'exam' && examStarted && examTime > 0) {
+          timer = setInterval(() => {
+            setExamTime(prev => {
+              if (prev <= 1) {
+                clearInterval(timer);
+                setMode('results');
+                return 0;
+              }
+              return prev - 1;
+            });
+          }, 1000);
+        }
+        return () => clearInterval(timer);
+      }, [mode, examStarted, examTime]);
+
+      const startStudy = () => {
+        setQuestions(filteredQuestions);
+        setCurrentIndex(0);
+        setAnswers({});
+        setShowAnswer(false);
+        setMode('study');
+        setStats(s => ({ ...s, studied: s.studied + 1 }));
+      };
+
+      const startExam = () => {
+        const shuffled = shuffleArray(questionsData);
+        setQuestions(shuffled.slice(0, 35));
+        setCurrentIndex(0);
+        setAnswers({});
+        setShowAnswer(false);
+        setExamTime(20 * 60);
+        setExamStarted(true);
+        setMode('exam');
+        setStats(s => ({ ...s, exams: s.exams + 1 }));
+      };
+
+      const handleAnswer = (optionIndex) => {
+        const q = questions[currentIndex];
+        const currentAnswers = answers[q.id] || [];
+        
+        if (q.type === 'TF' || q.type === 'SC') {
+          setAnswers({ ...answers, [q.id]: [optionIndex] });
+        } else {
+          const newAnswers = currentAnswers.includes(optionIndex)
+            ? currentAnswers.filter(i => i !== optionIndex)
+            : [...currentAnswers, optionIndex];
+          setAnswers({ ...answers, [q.id]: newAnswers });
+        }
+      };
+
+      const calculateQuestionScore = (question, userAnswers) => {
+        const correct = question.correctAnswers;
+        const user = userAnswers || [];
+        
+        if (question.type === 'TF' || question.type === 'SC') {
+          return user.length === 1 && correct.includes(user[0]) ? SCORING[question.type].correct : 0;
+        } else {
+          let score = 0;
+          for (let i = 0; i < question.options.length; i++) {
+            const shouldTick = correct.includes(i);
+            const didTick = user.includes(i);
+            if (shouldTick === didTick) score += 1;
+            else score -= 1;
+          }
+          return Math.max(0, Math.min(score, SCORING.MC.maxPoints));
+        }
+      };
+
+      const calculateResults = () => {
+        let totalScore = 0;
+        let maxScore = 0;
+        let correct = 0;
+        let partial = 0;
+        let incorrect = 0;
+
+        questions.forEach(q => {
+          const userAnswer = answers[q.id] || [];
+          const score = calculateQuestionScore(q, userAnswer);
+          const maxQ = q.type === 'MC' ? SCORING.MC.maxPoints : SCORING[q.type].correct;
+          
+          totalScore += score;
+          maxScore += maxQ;
+          
+          if (score === maxQ) correct++;
+          else if (score > 0) partial++;
+          else incorrect++;
+        });
+
+        const percentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+        const passed = percentage >= 75;
+
+        // Update best score
+        if (mode === 'exam' && percentage > stats.bestScore) {
+          setStats(s => ({ ...s, bestScore: Math.round(percentage) }));
+        }
+
+        return { totalScore, maxScore, percentage, passed, correct, partial, incorrect };
+      };
+
+      const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+      };
+
+      const toggleBookmark = (id) => {
+        const newBookmarks = new Set(bookmarked);
+        if (newBookmarks.has(id)) newBookmarks.delete(id);
+        else newBookmarks.add(id);
+        setBookmarked(newBookmarks);
+      };
+
+      const goTo = (index) => {
+        setCurrentIndex(index);
+        setShowAnswer(false);
+      };
+
+      const currentQuestion = questions[currentIndex];
+      const userAnswer = currentQuestion ? (answers[currentQuestion.id] || []) : [];
+
+      return (
+        <div style={{ minHeight: '100vh', paddingBottom: 'env(safe-area-inset-bottom, 20px)' }}>
+          
+          {/* Install Banner */}
+          {showInstall && (
+            <div className="install-banner">
+              <div>
+                <strong>Install App</strong>
+                <div style={{ fontSize: 13, opacity: 0.8 }}>Add to home screen for offline use</div>
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button onClick={() => setShowInstall(false)} style={{ background: 'transparent', border: 'none', color: '#0a0a0f', fontSize: 14, cursor: 'pointer' }}>Later</button>
+                <button onClick={installApp} className="btn" style={{ padding: '8px 16px', background: '#0a0a0f', color: '#00d4ff' }}>Install</button>
+              </div>
+            </div>
+          )}
+
+          {/* HOME */}
+          {mode === 'home' && (
+            <div style={{ maxWidth: 500, margin: '0 auto', padding: '40px 20px' }}>
+              <div style={{ textAlign: 'center', marginBottom: 40 }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>📈</div>
+                <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>
+                  <span className="gradient-text">Eurex Trader Exam</span>
+                </h1>
+                <p style={{ color: '#888', fontSize: 14 }}>105 Official Questions • Valid until 20.03.2026</p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 32 }}>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#00d4ff' }}>105</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Questions</div>
+                </div>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#00ff88' }}>{stats.exams}</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Exams Taken</div>
+                </div>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#ffd700' }}>{stats.bestScore}%</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Best Score</div>
+                </div>
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 16 }}>
+                <h2 style={{ fontSize: 18, marginBottom: 16 }}>📚 Study Mode</h2>
+                
+                <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+                  <select value={filter.chapter} onChange={e => setFilter({...filter, chapter: e.target.value})} style={{ flex: 1, minWidth: 140 }}>
+                    <option value="all">All Chapters</option>
+                    <option value="1.1">1.1 Exchange Rules</option>
+                    <option value="1.2">1.2 Trading Conditions</option>
+                    <option value="2.1">2.1 Trading Process</option>
+                    <option value="2.2">2.2 Orders</option>
+                    <option value="2.3">2.3 Protection Mechanisms</option>
+                    <option value="2.4">2.4 Matching</option>
+                  </select>
+                  
+                  <select value={filter.type} onChange={e => setFilter({...filter, type: e.target.value})} style={{ flex: 1, minWidth: 100 }}>
+                    <option value="all">All Types</option>
+                    <option value="TF">True/False</option>
+                    <option value="SC">Single Choice</option>
+                    <option value="MC">Multiple Choice</option>
+                  </select>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#888', fontSize: 14 }}>{filteredQuestions.length} questions</span>
+                  <button className="btn btn-primary" onClick={startStudy}>Start →</button>
+                </div>
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 16 }}>
+                <h2 style={{ fontSize: 18, marginBottom: 8 }}>🎯 Exam Simulation</h2>
+                <p style={{ color: '#888', fontSize: 14, marginBottom: 16 }}>35 questions • 20 minutes • 75% to pass</p>
+                <button className="btn btn-primary" onClick={startExam} style={{ width: '100%' }}>Start Exam →</button>
+              </div>
+
+              {bookmarked.size > 0 && (
+                <div className="card" style={{ padding: 24 }}>
+                  <h2 style={{ fontSize: 18, marginBottom: 8 }}>⭐ Bookmarked</h2>
+                  <p style={{ color: '#888', fontSize: 14, marginBottom: 16 }}>{bookmarked.size} saved questions</p>
+                  <button className="btn btn-secondary" onClick={() => {
+                    setQuestions(questionsData.filter(q => bookmarked.has(q.id)));
+                    setCurrentIndex(0);
+                    setAnswers({});
+                    setShowAnswer(false);
+                    setMode('study');
+                  }} style={{ width: '100%' }}>Review Bookmarks →</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* STUDY/EXAM */}
+          {(mode === 'study' || mode === 'exam') && currentQuestion && (
+            <div style={{ maxWidth: 600, margin: '0 auto', padding: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <button className="btn btn-secondary" onClick={() => setMode('home')} style={{ padding: '10px 16px' }}>← Back</button>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  {mode === 'exam' && (
+                    <div className={`timer ${examTime < 60 ? 'danger' : examTime < 300 ? 'warning' : ''}`}>
+                      ⏱ {formatTime(examTime)}
+                    </div>
+                  )}
+                  <span style={{ color: '#888' }}>{currentIndex + 1}/{questions.length}</span>
+                </div>
+              </div>
+
+              <div className="progress-bar" style={{ marginBottom: 20 }}>
+                <div className="progress-fill" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }} />
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 20 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <span className={`tag tag-${currentQuestion.type.toLowerCase()}`}>{currentQuestion.type}</span>
+                    <span style={{ color: '#666', fontSize: 12 }}>{currentQuestion.chapter}</span>
+                  </div>
+                  <button 
+                    onClick={() => toggleBookmark(currentQuestion.id)}
+                    style={{ background: 'none', border: 'none', fontSize: 24, cursor: 'pointer', padding: 0 }}
+                  >
+                    {bookmarked.has(currentQuestion.id) ? '⭐' : '☆'}
+                  </button>
+                </div>
+
+                <h2 style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.5, marginBottom: 6 }}>
+                  Q{currentQuestion.id}. {currentQuestion.question}
+                </h2>
+                
+                <p style={{ color: '#666', fontSize: 12, marginBottom: 24 }}>{TYPE_INFO[currentQuestion.type].desc}</p>
+
+                <div>
+                  {currentQuestion.options.map((option, idx) => {
+                    const isSelected = userAnswer.includes(idx);
+                    const isCorrect = currentQuestion.correctAnswers.includes(idx);
+                    const showResult = showAnswer && mode === 'study';
+                    
+                    let className = 'option';
+                    if (isSelected && !showResult) className += ' selected';
+                    if (showResult && isCorrect) className += ' correct';
+                    if (showResult && isSelected && !isCorrect) className += ' incorrect';
+
+                    return (
+                      <div 
+                        key={idx} 
+                        className={className}
+                        onClick={() => !showAnswer && handleAnswer(idx)}
+                      >
+                        <div className={`${currentQuestion.type === 'MC' ? 'checkbox' : 'radio'} ${isSelected ? 'checked' : ''}`}>
+                          {isSelected && <span style={{ color: '#0a0a0f', fontWeight: 700 }}>✓</span>}
+                        </div>
+                        <span style={{ fontSize: 15, lineHeight: 1.4 }}>{option}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+                <button 
+                  className="btn btn-secondary"
+                  onClick={() => goTo(currentIndex - 1)}
+                  disabled={currentIndex === 0}
+                  style={{ opacity: currentIndex === 0 ? 0.4 : 1, flex: 1 }}
+                >
+                  ← Prev
+                </button>
+
+                {mode === 'study' && !showAnswer && (
+                  <button className="btn btn-secondary" onClick={() => setShowAnswer(true)} style={{ flex: 1 }}>
+                    Check
+                  </button>
+                )}
+                
+                {currentIndex === questions.length - 1 ? (
+                  <button className="btn btn-primary" onClick={() => setMode('results')} style={{ flex: 1 }}>
+                    {mode === 'exam' ? 'Submit' : 'Results'} →
+                  </button>
+                ) : (
+                  <button className="btn btn-primary" onClick={() => goTo(currentIndex + 1)} style={{ flex: 1 }}>
+                    Next →
+                  </button>
+                )}
+              </div>
+
+              <div className="card" style={{ padding: 16 }}>
+                <div style={{ fontSize: 12, color: '#888', marginBottom: 10 }}>Questions</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {questions.map((q, idx) => (
+                    <div
+                      key={q.id}
+                      className={`nav-dot ${idx === currentIndex ? 'current' : ''} ${answers[q.id]?.length ? 'answered' : ''} ${bookmarked.has(q.id) ? 'bookmarked' : ''}`}
+                      onClick={() => goTo(idx)}
+                    >
+                      {idx + 1}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* RESULTS */}
+          {mode === 'results' && (
+            <div style={{ maxWidth: 500, margin: '0 auto', padding: '40px 20px' }}>
+              {(() => {
+                const results = calculateResults();
+                return (
+                  <>
+                    <div style={{ textAlign: 'center', marginBottom: 40 }}>
+                      <div style={{ fontSize: 64, marginBottom: 12 }}>{results.passed ? '🎉' : '📚'}</div>
+                      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8, color: results.passed ? '#00ff88' : '#ff4757' }}>
+                        {results.passed ? 'Passed!' : 'Keep Practicing'}
+                      </h1>
+                      <p style={{ color: '#888' }}>{results.passed ? 'Great work!' : 'You need 75% to pass'}</p>
+                    </div>
+
+                    <div className="card" style={{ padding: 24, marginBottom: 20 }}>
+                      <div style={{ textAlign: 'center', marginBottom: 24 }}>
+                        <div style={{ fontSize: 56, fontWeight: 700, color: results.passed ? '#00ff88' : '#ff4757' }}>
+                          {results.percentage.toFixed(1)}%
+                        </div>
+                        <div style={{ color: '#888' }}>{results.totalScore} / {results.maxScore} points</div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(0, 255, 136, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#00ff88' }}>{results.correct}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Correct</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(255, 215, 0, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#ffd700' }}>{results.partial}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Partial</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(255, 71, 87, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#ff4757' }}>{results.incorrect}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Wrong</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 12 }}>
+                      <button className="btn btn-secondary" onClick={() => setMode('home')} style={{ flex: 1 }}>Home</button>
+                      <button className="btn btn-primary" onClick={startExam} style={{ flex: 1 }}>Try Again →</button>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<EurexQuizApp />);
+  </script>
+</body>
+</html>
