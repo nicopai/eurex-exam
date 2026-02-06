@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FWB Exam">
+  <meta name="theme-color" content="#0a0a0f">
+  <meta name="description" content="FWB Trader Exam Preparation - 150 Official Questions">
+  
+  <title>FWB Trader Exam</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a0f' width='100' height='100' rx='20'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%2300d4ff'>🏛</text></svg>">
+  
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%); color: #e8e8e8; min-height: 100vh; min-height: -webkit-fill-available; }
+    html { height: -webkit-fill-available; }
+    #root { min-height: 100vh; min-height: -webkit-fill-available; }
+    .gradient-text { background: linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .btn { padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.2s ease; border: none; touch-action: manipulation; }
+    .btn-primary { background: linear-gradient(135deg, #ff6b35 0%, #e85d26 100%); color: #fff; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #e8e8e8; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .btn-secondary:active { background: rgba(255, 255, 255, 0.12); }
+    .option { padding: 16px 20px; border-radius: 12px; cursor: pointer; transition: all 0.15s ease; border: 2px solid transparent; background: rgba(255, 255, 255, 0.04); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 14px; touch-action: manipulation; }
+    .option:active { transform: scale(0.99); }
+    .option.selected { background: rgba(255, 107, 53, 0.15); border-color: #ff6b35; }
+    .option.correct { background: rgba(0, 255, 136, 0.15); border-color: #00ff88; }
+    .option.incorrect { background: rgba(255, 71, 87, 0.15); border-color: #ff4757; }
+    .checkbox, .radio { width: 24px; height: 24px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .radio { border-radius: 50%; }
+    .checkbox.checked, .radio.checked { background: #ff6b35; border-color: #ff6b35; }
+    .progress-bar { height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #ff6b35 0%, #f7c59f 100%); transition: width 0.3s ease; }
+    .nav-dot { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); touch-action: manipulation; }
+    .nav-dot.current { background: #ff6b35; color: #fff; }
+    .nav-dot.answered { background: rgba(255, 107, 53, 0.3); }
+    .nav-dot.bookmarked { border-color: #ffd700; border-width: 2px; }
+    .tag { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tag-tf { background: rgba(147, 51, 234, 0.2); color: #a78bfa; }
+    .tag-sc { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .tag-mc { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+    select { padding: 12px 16px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); color: #e8e8e8; font-size: 14px; cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+    select:focus { outline: none; border-color: #ff6b35; }
+    .stat-card { padding: 20px; border-radius: 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); text-align: center; }
+    .timer { font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace; font-size: 20px; font-weight: 600; color: #ff6b35; }
+    .timer.warning { color: #ffd700; }
+    .timer.danger { color: #ff4757; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .install-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 107, 53, 0.95); color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW registration failed'));
+      });
+    }
+  </script>
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // Complete FWB Trader Exam question database (150 questions)
+    const questionsData = [
+      // 1.1 Exchange Rules I
+      { id: 1, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "Which of the following tasks is not performed by the Exchange Council?", options: ["Adoption of the Exchange Rules", "Supervision of the Management Board", "Appointment of the head of the Trading Surveillance Office", "Admission of securities"], correctAnswers: [3] },
+      { id: 2, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "Which exchange body decides on the commencement, suspension, interruption and discontinuation of the price fixing for securities?", options: ["Cash Markets Operations", "Trading Surveillance Office", "Management Board of the Exchange", "Exchange Council"], correctAnswers: [2] },
+      { id: 3, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "For which of the following functions is the Management Board of the Exchange responsible?", options: ["Monitoring of exchange trading as the implementing body of the Supervisory Authority", "Definition of start and end of price determination", "Brokerage of exchange transactions", "Prosecution of insider trading violations"], correctAnswers: [1] },
+      { id: 4, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "Which German law requires every exchange to establish and operate a Trading Surveillance Office?", options: ["German Securities Trading Act", "German Banking Act", "German Exchange Act", "German Exchange Supervisory Act"], correctAnswers: [2] },
+      { id: 5, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "The Exchange Rules stipulate that companies must provide sufficient collateral for the performance of their transactions. Which body is responsible for monitoring compliance with the security framework of individual trading participants?", options: ["Management Board of the Exchange", "Trading Surveillance Office", "German Federal Financial Supervisory Authority (BaFin)", "Exchange Supervisory Authority"], correctAnswers: [1] },
+      { id: 6, chapter: "1.1", section: "Exchange Rules I", type: "SC", question: "Which of the following measures is not available to the Disciplinary Committee to take action against a trading participant?", options: ["Reprimand", "Fine of up to €1,000,000", "Suspension from the exchange for up to 30 trading days", "Irrevocable withdrawal of the trading license"], correctAnswers: [3] },
+      // 1.2 Exchange Rules II
+      { id: 7, chapter: "1.2", section: "Exchange Rules II", type: "TF", question: "The claims and/or liabilities with respect to the trading of certain securities (as determined by Management Board) are clearing via a central counterparty.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 8, chapter: "1.2", section: "Exchange Rules II", type: "TF", question: "The central counterparty for transactions in CCP-eligible securities is Deutsche Börse AG.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 9, chapter: "1.2", section: "Exchange Rules II", type: "TF", question: "Settlement for trades concluded on FWB is done in principle via Clearstream Banking AG or via another central securities depository recognised in the Exchange Rules.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 10, chapter: "1.2", section: "Exchange Rules II", type: "MC", question: "When will trading on the FWB be suspended in the regulated market pursuant to section 59 of the Exchange Rules?", options: ["If orderly settlement is temporarily at risk.", "On the day before the annual financial statement of a stock corporation is released.", "If it is deemed necessary in order to protect investors.", "On the day of the stock corporation's annual general meeting."], correctAnswers: [0, 2] },
+      { id: 11, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "Who must the Management Board inform immediately if trading in the regulated market is suspended?", options: ["The Trading Surveillance Office and the Exchange Supervisory Authority", "The German Federal Financial Supervisory Authority (BaFin) and the Exchange Supervisory Authority", "The Exchange Council and the Trading Surveillance Office", "The Exchange Supervisory Authority and the Exchange Council"], correctAnswers: [0] },
+      { id: 12, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "Which statement is wrong?", options: ["If trading in the regulated market is suspended by the Management Board existing orders are deleted.", "Suspension of trading may be limited to parts of trading.", "Suspension of trading cannot be limited to parts of trading.", "If trading in the regulated market is interrupted by the Management Board existing orders are not deleted."], correctAnswers: [2] },
+      { id: 13, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "What is prohibited according to the market integrity clause (section 121 Exchange Rules)?", options: ["Concluding OTC trades.", "Placing orders in accordance with the common market practice.", "Effect a price which is not in line with the market or an artificial price level in the Exchange EDP.", "None of the above."], correctAnswers: [2] },
+      { id: 14, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "Which of the following circumstances does violate the market integrity clause (section 121 Exchange Rules)?", options: ["Causing an artificial price level.", "Entering orders that are suitable to erroneously or deceptively influence offer and demand in a security.", "Influencing the price of a security due to orders of one trading participant.", "All of the above."], correctAnswers: [3] },
+      { id: 15, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "Which statement applies to the short code regime?", options: ["When entering an order, the short code assigned to the long code of the order must be entered.", "As a general rule, only one short code can be assigned to a long code.", "When a short code is used for the first time, FWB must be notified of the assigned long code by the end of the trading day following the trading day on which the short code was first used.", "All of the above."], correctAnswers: [3] },
+      { id: 16, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "Which statement is not correct in case of technical problems?", options: ["In the event of blocking the access to the exchange EDP for all companies, no more entries can be effected (halt status).", "If the trading system of a company is non-functional, the Management Board may, upon request, enter data into the exchange EDP on behalf of such trading participant.", "A breakdown of the telephone system or another failure which prevents a communication via telephone shall immediately be made known to the Management Board by the company or the concerned exchange trader.", "Trading Surveillance Office can block the access to the exchange EDP for one, several or all companies."], correctAnswers: [3] },
+      { id: 17, chapter: "1.2", section: "Exchange Rules II", type: "MC", question: "When can the Management Board block the access to the exchange EDP?", options: ["In case of technical problems.", "If orderly exchange trading is endangered.", "As a rule, the access to the trading system cannot be locked.", "None of the above."], correctAnswers: [0, 1] },
+      { id: 18, chapter: "1.2", section: "Exchange Rules II", type: "SC", question: "How does a trading participant legitimise \"Trading on Behalf\" if individual orders or quotes are to be deleted in the event of technical problems?", options: ["By mentioning a personal identification number.", "Via a recall by employees of Cash Markets Operations.", "By mentioning an active user ID.", "By mentioning the system password."], correctAnswers: [2] },
+      // 1.3 Exchange Rules III
+      { id: 19, chapter: "1.3", section: "Exchange Rules III", type: "MC", question: "When does the quote provider for a structured product not have to specify an ask limit in its indicative quote for the specialist?", options: ["When the security is completely sold out by the issuer (sold-out status).", "If the security has been terminated by the issuer.", "When the market is sufficiently liquid.", "If the security is affected by a legal amendment in such a way that a purchase of the security is no longer possible."], correctAnswers: [0, 1, 3] },
+      { id: 20, chapter: "1.3", section: "Exchange Rules III", type: "MC", question: "Which of the following obligations must quote providers fulfil in trading with structured products?", options: ["The indicative quote which they make available to the specialists must always have a bid and an ask limit.", "They must provide the specialist with at least one indicative quote on each trading day.", "They must provide the Management Board with an expert contact person who is admitted for the company as an exchange trader at the FWB and a technical contact person.", "They shall name a binding quote to the specialist upon their request."], correctAnswers: [1, 2, 3] },
+      { id: 21, chapter: "1.3", section: "Exchange Rules III", type: "MC", question: "What are the specific rules applicable to structured products in the Continuous Auction?", options: ["Short sales are not permitted.", "The issuer must name a quote provider for the respective security in the application for introduction to trading.", "The quote provider must submit indicative quotes with bid and ask limits in every situation.", "The Trading Surveillance Office may interdict quote providers the quotation in whole or in part."], correctAnswers: [0, 1, 3] },
+      { id: 22, chapter: "1.3", section: "Exchange Rules III", type: "SC", question: "Who determines the quote provider for a structured product?", options: ["Issuer", "Trading Surveillance Office", "Specialist", "Management Board of the Exchange"], correctAnswers: [0] },
+      { id: 23, chapter: "1.3", section: "Exchange Rules III", type: "SC", question: "Which of the following statements does not apply to quote providers for structured products?", options: ["They must be available by telephone to the Management Board of the Exchange and the Specialists from one hour before the start of trading until one hour after the end of electronic trading.", "They shall ensure that the necessary human, technical and financial resources are available to meet the quote requirement.", "They must be identical with the issuer.", "They need an expert contact person who is admitted for the company as exchange trader at the FWB."], correctAnswers: [2] },
+      { id: 24, chapter: "1.3", section: "Exchange Rules III", type: "SC", question: "In the case of quote restrictions for a structured product, what applies to the quote providers?", options: ["They must indicate this immediately by a quotation with a bid and ask limit of \"0\".", "If the reason is a system failure, they can inform the Management Board and the Trading Surveillance Office in writing in addition to the quotation with \"0\".", "At the request of the Management Board or the Trading Surveillance Office, they shall provide information on the reason for and the expected duration of the quote restrictions.", "All the answers are correct."], correctAnswers: [3] },
+      // 1.4 Conditions for Transactions
+      { id: 25, chapter: "1.4", section: "Conditions for Transactions", type: "TF", question: "For Exchange transactions due for settlement the seller is obligated to pay the corresponding cash amount for the securities.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 26, chapter: "1.4", section: "Conditions for Transactions", type: "TF", question: "For Exchange transactions due for settlement the buyer is obligated to pay the corresponding cash amount for the securities earliest on the third day after trade conclusion.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 27, chapter: "1.4", section: "Conditions for Transactions", type: "TF", question: "Exchange transactions in shares must be settled on the second performance day after the trade day.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 28, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Which statements are correct for pre-arranged trades according to section 3 of the Conditions for Transactions on the FWB?", options: ["During continuous trading (trading model continuous trading with intraday auctions) they are admissible if one of the participants, prior to entering his/her order, has entered an appropriate trade request.", "During continuous trading (trading model continuous trading with intraday auctions) they are always forbidden.", "The order leading to the pre-arranged trade must be entered earliest 5 seconds and latest 35 seconds after the trade request.", "None of the above"], correctAnswers: [0, 2] },
+      { id: 29, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Which of the following circumstances violate section 3 of the Conditions for Transactions on the FWB?", options: ["The entry of opposite orders concerning the same security and executable immediately by several traders of one company.", "A knowing cross trade without trade request before.", "A pre-arranged trade without trade request before.", "The entry of orders with the intention of influencing the price of derivatives relating to the security in question that are traded on Eurex Deutschland."], correctAnswers: [0, 1, 2, 3] },
+      { id: 30, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "When is a cross trade or a pre-arranged trade permitted according to section 3 of the Conditions for Transactions on the FWB?", options: ["If one of the involved traders had entered a trade request in continuous trading (trading model continuous trading with intraday auctions) before.", "If the order leading to the cross trade or pre-arranged trade had been entered earliest 5 seconds and latest 35 seconds after the trade request.", "If one of the involved traders had announced the cross trade or pre-arranged trade to trading surveillance office.", "If the phase crossing is active in the trading system."], correctAnswers: [0, 1] },
+      { id: 31, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Which statements are correct for cross trades?", options: ["During continuous trading (trading model continuous trading with intraday auctions) they are always forbidden.", "If the self match prevention function is used by a trading participant, unintended crossings during continuous trading (trading model continuous trading with intraday auctions) and during Trade-at-Close are prevented by the trading system.", "During continuous trading (trading model continuous trading with intraday auctions) they are admissible if one of the participants, prior to entering his/her order, has entered an appropriate trade request.", "None of the above"], correctAnswers: [1, 2] },
+      { id: 32, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Which details must a trade request contain?", options: ["Trader ID", "Quantity", "Limit", "Security"], correctAnswers: [0, 3] },
+      { id: 33, chapter: "1.4", section: "Conditions for Transactions", type: "SC", question: "Cross-Trades and Pre-Arranged Trades ...", options: ["are admissible during continuous trading (trading model continuous trading with intraday auctions) if they have been announced by a trade request and the deadline of order entry has been met.", "are possible in auctions and volatility interruptions.", "are always forbidden.", "can be entered into the system anytime."], correctAnswers: [0] },
+      { id: 34, chapter: "1.4", section: "Conditions for Transactions", type: "SC", question: "Which deadline must be considered in connection with a mistrade application?", options: ["In case of securities traded in Continuous Trading with intra-day auctions or in auctions, the Mistrade application shall be submitted within three trading hours upon receipt of the execution confirmation.", "In case of securities traded in Continuous Auction, the Mistrade application shall be submitted within one trading hour upon receipt of the execution confirmation.", "In case of trades in securities traded in Continuous Auction, the Mistrade application shall be submitted within two trading hours upon receipt of the execution confirmation.", "In case of securities traded in Continuous Trading with intra-day auctions or in auctions, the Mistrade application shall be submitted within ten minutes upon receipt of the execution confirmation."], correctAnswers: [1] },
+      { id: 35, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Under which circumstances can the Management Board cancel a transaction?", options: ["The price of the transaction in question is not in line with market conditions.", "The price of the transaction in question is in line with market conditions.", "An admissible application was submitted", "The involved parties reach an agreement without involving the Exchange and notify the Exchange within 24 hours."], correctAnswers: [0, 2] },
+      { id: 36, chapter: "1.4", section: "Conditions for Transactions", type: "MC", question: "Which details must a mistrade application contain?", options: ["Company and contact person of the applicant", "Time, volume and price of transaction", "Details regarding the price in line with the market", "Company and contact person of the counterparty"], correctAnswers: [0, 1, 2] },
+      { id: 37, chapter: "1.4", section: "Conditions for Transactions", type: "SC", question: "If a bilateral trade in a security that has its main trading venue outside the EU is not fulfilled in time, the buyer is entitled to self-execution. Which of the following tasks does not have to be fulfilled in the context of self-execution?", options: ["Setting of a reasonable period for performance.", "To purchase the undelivered securities after expiry of a grace period.", "Inform the CSD of the late delivery.", "To sell the undelivered securities after expiry of a grace period."], correctAnswers: [3] },
+      { id: 38, chapter: "1.4", section: "Conditions for Transactions", type: "SC", question: "Which statement regarding the conclusion, performance or overdue performance of exchange transactions is false?", options: ["Exchange transactions are to be settled at the earliest two performance days after conclusion of the transaction.", "Exchange transactions are concluded between the admitted companies or between them and a central counterparty.", "The right to self-execution also applies to cleared transactions.", "Counterparties involved in a transaction receive an electronic execution confirmation."], correctAnswers: [2] },
+      { id: 39, chapter: "1.4", section: "Conditions for Transactions", type: "SC", question: "What applies if an exchange transaction is not settled in time?", options: ["For bilateral transactions in securities having their main trading venue in the EU, the relevant articles of the Central Securities Depository Regulation (CSDR) apply.", "For cleared transactions, the clearing conditions of the clearing house apply.", "In the case of bilateral transactions not covered by the CSDR, the non-defaulting party is entitled to self-execution.", "All answers are correct."], correctAnswers: [3] },
+      // 1.5 On-exchange off-book trading
+      { id: 40, chapter: "1.5", section: "Off-book Trading", type: "SC", question: "Which statement regarding the T7 Entry Service (TES) is correct?", options: ["For trades concluded via the TES, volume and price can be arranged as required.", "The trading participant shall specify a minimum volume for its off-book trades.", "Trades can only be concluded if the price is within a defined range.", "The TES order functionality can only be used by admitted exchange traders."], correctAnswers: [0] },
+      { id: 41, chapter: "1.5", section: "Off-book Trading", type: "SC", question: "When is an off-book trade prohibited?", options: ["If the trade was entered into the system by mistake.", "If the beneficial owner is identical on the purchase and sale side.", "If the trade has not been confirmed by the end of the off-book trading period.", "If the trade was entered by an employee of the trading participant who is not admitted to trading."], correctAnswers: [1] },
+      { id: 42, chapter: "1.5", section: "Off-book Trading", type: "SC", question: "Which statement is correct for the request-for-quote functionality Xetra EnLight?", options: ["Requesters (traders) may request offers to purchase or sell a certain amount of a security directly from one or more responders (market makers).", "Offers may only be made and accepted within a timeframe determined by the management board of FWB.", "If several responders submit a Xetra EnLight offer, the requester may only accept one Xetra EnLight offer.", "All answers are correct."], correctAnswers: [3] },
+      // 1.6 Trading regulation for regulated unofficial market
+      { id: 43, chapter: "1.6", section: "Regulated Unofficial Market", type: "SC", question: "Which of the following statements is not applicable for trading funds (w/o ETFs) in Continuous Auction?", options: ["The quotation of the Specialist shall be made on the basis of the current order book situation and the price of the funds calculated by the Specialists.", "In the event of special situations, such as the suspension of issuance or repurchase of fund units by the issuer, the specialist must immediately inform the Management Board and the Trading Surveillance Office of the FWB in writing.", "The quotation of the specialist is based exclusively on the current order book situation.", "In particular, the Management Board may suspend trading in the relevant fund units in the event of a suspension of the repurchase of fund units or the closure of a fund."], correctAnswers: [2] },
+      { id: 44, chapter: "1.6", section: "Regulated Unofficial Market", type: "SC", question: "Where are the tasks for the specialists in trading funds (w/o ETFs) in addition to the Exchange rules regulated?", options: ["In the trading regulation for the Regulated Unofficial Market on Frankfurter Wertpapierbörse (FWB).", "In the general terms and conditions for Xetra.", "In the conditions for transactions on the Frankfurter Wertpapierbörse (FWB).", "None of the above."], correctAnswers: [0] },
+      { id: 45, chapter: "1.6", section: "Regulated Unofficial Market", type: "SC", question: "Which statement regarding the quotation duty of specialists in trading funds (w/o ETFs) is correct?", options: ["If the issuer suspends the issue of fund units, the specialist is exempted from the obligation to quote on the ask side.", "If the issuer suspends the issue of fund units, the specialist is exempted from the obligation to quote on the bid side.", "If the repurchase of fund units by the issuer is suspended, the specialist is obliged to provide indicative quotes.", "During trading hours, binding quotes must be submitted on an ongoing basis."], correctAnswers: [0] },
+      // 2.1.1 CT Fundamental Principles
+      { id: 46, chapter: "2.1.1", section: "CT Fundamentals", type: "MC", question: "Which fundamental principles apply to the Xetra market model?", options: ["There is post-trade anonymity due to the presence of a central counterparty.", "In the context of pre-trade anonymity, trading participants do not see the identity of the order submitter in the open order book.", "During Trade-at-Close the order book is open.", "In principle, the order book is closed."], correctAnswers: [0, 1] },
+      { id: 47, chapter: "2.1.1", section: "CT Fundamentals", type: "MC", question: "Which of the following statements are valid for continuous trading in connection with auctions?", options: ["An ISIN (a security) can be traded in several trading currencies as a dedicated single instrument, i.e. an instrument refers to a specific ISIN currency combination.", "In opening auctions also fractions are supported.", "Auctions are only called when required.", "During the call phase the order book is partially closed."], correctAnswers: [0, 3] },
+      { id: 48, chapter: "2.1.1", section: "CT Fundamentals", type: "MC", question: "Which statements are valid for continuous trading in connection with auctions?", options: ["The trading model is order driven.", "Orders are executed according to price/time priority.", "Trading of fractions is supported.", "Trading is anonymous."], correctAnswers: [0, 1, 3] },
+      { id: 49, chapter: "2.1.1", section: "CT Fundamentals", type: "SC", question: "Which securities are tradeable in the trading model continuous trading in connection with auctions?", options: ["All securities listed at FWB.", "Selected shares, bonds, Exchange Traded Funds and Exchange Traded Products.", "Selected shares, Exchange Traded Funds and Exchange Traded Products.", "None of the above."], correctAnswers: [1] },
+      { id: 50, chapter: "2.1.1", section: "CT Fundamentals", type: "SC", question: "Which statement is correct for the trading venue Xetra?", options: ["Three hierarchy levels of traders are distinguished.", "Information users without trader admission are possible.", "Traders can be organized in trader groups.", "All of the above."], correctAnswers: [3] },
+      { id: 51, chapter: "2.1.1", section: "CT Fundamentals", type: "SC", question: "In the trading model continuous trading in connection with auctions a trader can act as ...", options: ["Issuer.", "Designated Sponsor.", "Specialist.", "Quote provider."], correctAnswers: [1] },
+      { id: 52, chapter: "2.1.1", section: "CT Fundamentals", type: "MC", question: "In which instruments is Xetra Midpoint trading permitted?", options: ["Bonds", "Shares", "Exchange Traded Funds", "Exchange Traded Commodities"], correctAnswers: [1, 2, 3] },
+      // 2.1.2 CT Trading Process
+      { id: 53, chapter: "2.1.2", section: "CT Trading Process", type: "TF", question: "In auctions time price/time priority is valid so that the maximum of one order, which is either limited at the auction price or unlimited, can be partially executed.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 54, chapter: "2.1.2", section: "CT Trading Process", type: "TF", question: "Trade-at-Close is triggered automatically after each closing auction.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 55, chapter: "2.1.2", section: "CT Trading Process", type: "TF", question: "Iceberg orders do not participate with their full volume in auctions.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 56, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement regarding pre- or post-trading phase is correct?", options: ["Market Participants can see the order book situation without restrictions.", "Market participants can enter, modify and delete orders and quotes during the pre-trading phase.", "Market participants can enter, modify and delete orders for the next trading day.", "The indicative auction price of the opening call is displayed during the pre-trading phase."], correctAnswers: [2] },
+      { id: 57, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement regarding the trading models offered on the trading venue Xetra is wrong?", options: ["The call phase of an auction is partially closed.", "On-Exchange Off-Book transactions with any order volume can be executed.", "Auction price determination is effected according to the principle of most executable volume.", "The order book in continuous trading is open."], correctAnswers: [1] },
+      { id: 58, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Xetra on-exchange trading is supplemented by various functionalities. Which one is not included?", options: ["Request-for-Quote Functionality Xetra EnLight", "A functionality for off-book trading (T7 Entry Service - TES Typ LIS)", "Block trading functionality Xetra XXL", "A functionality to enter OTC transactions (T7 Entry Service - TES Typ OTC)"], correctAnswers: [2] },
+      { id: 59, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "The duration of the random end for an auction call phase in the trading model continuous trading in connection with auctions is:", options: ["0-30 Seconds", "15 Seconds", "Only a few seconds", "Minimum of 15, maximum of 30 seconds"], correctAnswers: [0] },
+      { id: 60, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement does not apply to Trade-at-Close (TaC)?", options: ["TaC starts only if the price determination in the closing auction was completed with a positive turnover.", "There is no pre-trade transparency, the order book is closed.", "New incoming orders that can be executed at the closing auction price are matched immediately.", "Only market and limit orders are allowed."], correctAnswers: [0] },
+      { id: 61, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement regarding auctions is correct?", options: ["The order book is open during the call phase.", "The order book is partially closed during the call phase.", "It ends in a freeze phase after the maximum duration of its call phase at the latest.", "Market surpluses are not displayed."], correctAnswers: [1] },
+      { id: 62, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement applies to continuous trading in connection with auctions?", options: ["A closing auction is only carried out for instruments included in a selection index.", "The duration of the call phase is different for opening auctions, intraday auctions and closing auctions.", "There is no fixed auction schedule.", "An opening auction is only carried out if the order book is crossed."], correctAnswers: [1] },
+      { id: 63, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement applies to an auction?", options: ["In an auction, price/time priority applies.", "Book-or-cancel orders and volume discovery orders with the execution condition \"GTX\" are deleted when an auction is triggered.", "Iceberg orders and volume discovery orders participate with their full volume", "All of the above."], correctAnswers: [3] },
+      { id: 64, chapter: "2.1.2", section: "CT Trading Process", type: "SC", question: "Which statement regarding continuous trading is wrong?", options: ["Each order is fully executed with one transaction.", "Between market orders time priority applies.", "Continuous trading is started after the termination of the opening auction.", "New orders are checked for Self Match Prevention."], correctAnswers: [0] },
+      // 2.1.3 CT Orders
+      { id: 65, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "Which order types are supported on the trading venue Xetra?", options: ["Iceberg Orders.", "Hidden Orders.", "Stop Limit Orders.", "All-or-None Orders."], correctAnswers: [0, 2] },
+      { id: 66, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "In which of the following cases does a modification of a limit order not result in a new time priority?", options: ["If the limit is changed.", "If the text field is changed.", "If the volume of the order is reduced.", "If the order modification has an adverse effect on the execution priority of other orders in the order book."], correctAnswers: [1, 2] },
+      { id: 67, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "Which statements regarding the functionality of volume discovery orders are correct?", options: ["The total volume is executable against iceberg orders.", "The volume discovery order builds on the functionality of the iceberg order.", "The hidden part will only be executed at the current midpoint against other hidden parts of volume discovery orders.", "The order type can only be used in auctions."], correctAnswers: [1, 2] },
+      { id: 68, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "In which of the following cases the overall volume of an iceberg order is visible during an auction?", options: ["Always.", "If, in the case of an uncrossed order book, the total volume of the iceberg order is part of the displayed cumulative volumes at the best bid/ask limit.", "If the total volume of the iceberg order is part of the indicative auction surplus.", "Never."], correctAnswers: [1, 2] },
+      { id: 69, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "Which order types are supported in continuous trading?", options: ["Hidden order", "Iceberg order", "Volume Discovery order", "Order-on-event"], correctAnswers: [1, 2] },
+      { id: 70, chapter: "2.1.3", section: "CT Orders", type: "MC", question: "Which statements concerning book-or-cancel orders are correct?", options: ["They permit passive execution only.", "They are executed as well in volatility interruptions.", "They must have a predefined minimum volume.", "If immediate execution is possible, the order is rejected."], correctAnswers: [0, 3] },
+      { id: 71, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "In which of the following ways is a fill-or-kill order executed?", options: ["Immediate execution to the extent possible, deletion of the unexecuted part of the order.", "Only during auctions.", "Only if there are no iceberg orders in the order book.", "Immediately and fully or not at all."], correctAnswers: [3] },
+      { id: 72, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "In which of the following ways is an immediate-or-cancel order executed?", options: ["Identical execution to that of ordinary limit or market orders.", "Immediate execution to the extent possible, deletion of the unexecuted part of the order.", "Immediate execution in full, or if this is not possible, deletion of the order.", "None of the above."], correctAnswers: [1] },
+      { id: 73, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which statement regarding modification of an order is correct?", options: ["A modification always leads to a new time priority.", "The order number remains always unchanged even if the order receives a new time priority.", "During auctions order modifications are not permissible.", "A modification effects a deletion of the existing order and a new order entry with new time priority and new order number."], correctAnswers: [1] },
+      { id: 74, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which validity restriction does not exist for orders?", options: ["Good-for-day (GFD)", "Good-till-auction (GTA)", "Good-till-date (GTD)", "Good-till-cancelled (GTC)"], correctAnswers: [1] },
+      { id: 75, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which of the following is correct for one-cancels-other orders?", options: ["It combines a market order and a stop order.", "It combines a limit order and a stop market order.", "All execution conditions and trading restrictions are supported.", "In case of a partial execution the non-executed parts of the order are deleted."], correctAnswers: [1] },
+      { id: 76, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which of the following is correct for trailing stop orders?", options: ["If the reference price of a trailing stop sell order falls, the dynamic stop limit is not adjusted.", "Further execution conditions and trading restrictions are not supported.", "The dynamic stop limit is continuously monitored.", "All of the above."], correctAnswers: [3] },
+      { id: 77, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which statement concerning the treatment of orders in the order book at a suspension or an interruption of trading is correct?", options: ["Unexecuted orders are deleted in both cases.", "Existing orders are deleted at a suspension of trading.", "Existing orders are deleted at an interruption of trading.", "Neither event has an influence on unexecuted orders."], correctAnswers: [1] },
+      { id: 78, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "According to the Exchange Rules which specification is not necessary for order entry?", options: ["Orders generated through algorithmic trading have to be marked.", "Orders must have a member internal order number.", "There has to be an adequate ratio between order and bindings quotes entries, modifications and deletions and trades (Order to Trade Ratio).", "Orders need to be specified as proprietary or agent orders."], correctAnswers: [1] },
+      { id: 79, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "Which of the following events does not lead to a deletion of orders?", options: ["Granting of subscription rights.", "Dividend payments.", "Significant price deviations from the last price.", "Suspension of trading."], correctAnswers: [1] },
+      { id: 80, chapter: "2.1.3", section: "CT Orders", type: "SC", question: "How does a midpoint sweep order behave if it has not found a counterparty in the midpoint order book?", options: ["The sweep order is automatically deleted.", "The sweep order remains in the midpoint order book and waits for execution.", "The sweep order is re-entered into the midpoint order book at a defined interval.", "The sweep order goes on to the open order book (Xetra Central Limit Orderbook) and checks for execution."], correctAnswers: [3] },
+      // 2.1.4 CT Safeguards
+      { id: 81, chapter: "2.1.4", section: "CT Safeguards", type: "TF", question: "The ACE volatility interruption model is assigned to all securities for all trading phases.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 82, chapter: "2.1.4", section: "CT Safeguards", type: "TF", question: "A volatility interruption can be initiated only if the potential next price lies outside both price ranges.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 83, chapter: "2.1.4", section: "CT Safeguards", type: "TF", question: "A volatility interruption in continuous trading leads to a change in the trading form, in both the single volatility interruption model and the ACE volatility interruption model.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 84, chapter: "2.1.4", section: "CT Safeguards", type: "MC", question: "Which of the following prices lead to an adjustment of the reference price for the static price corridor?", options: ["Auction prices", "Prices resulting from a volatility interruption", "Prices determined in continuous trading", "Indicative auction prices"], correctAnswers: [0, 1] },
+      { id: 85, chapter: "2.1.4", section: "CT Safeguards", type: "MC", question: "Which statements apply to one or both volatility interruption models?", options: ["In the ACE volatility interruption model several subsequently expanding price corridors can line up in the call phase.", "A volatility interruption is only triggered if the next potential execution price is outside the static price corridor.", "Price corridors are not published in the ACE volatility interruption model.", "An extended volatility interruption will be terminated automatically once there is no longer an executable order book situation."], correctAnswers: [0, 3] },
+      { id: 86, chapter: "2.1.4", section: "CT Safeguards", type: "SC", question: "What leads to a volatility interruption in both volatility interruption models?", options: ["The indicative price lies outside the dynamic price range and within the static price range.", "The indicative price lies within the dynamic price range and outside the static price range.", "The indicative price lies outside the dynamic and the static price range.", "The indicative price corresponds to the reference price."], correctAnswers: [2] },
+      // 2.1.5 CT Designated Sponsor
+      { id: 87, chapter: "2.1.5", section: "CT Designated Sponsor", type: "TF", question: "Designated Sponsors have to provide double-sided quotes or orders for a certain minimum time during continuous trading.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 88, chapter: "2.1.5", section: "CT Designated Sponsor", type: "TF", question: "For Designated Sponsor quotes all validity constraints are possible.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 89, chapter: "2.1.5", section: "CT Designated Sponsor", type: "TF", question: "Only Designated Sponsors can enter quotes.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 90, chapter: "2.1.5", section: "CT Designated Sponsor", type: "SC", question: "Which of the following obligations has a Designated Sponsor?", options: ["In case of \"stressed market conditions\" stricter quote requirements.", "Provision of additional liquidity for at least 50 shares.", "Participation in auctions and volatility interruptions.", "Provision of liquidity by double-sided quotes or corresponding orders for certain minimum times during continuous trading."], correctAnswers: [3] },
+      { id: 91, chapter: "2.1.5", section: "CT Designated Sponsor", type: "SC", question: "A quote by a Designated Sponsor is ...", options: ["the non-binding indication of a price level.", "typically, the simultaneous entry of a buy and sell limit order.", "valid in continuous trading only.", "good for day."], correctAnswers: [1] },
+      { id: 92, chapter: "2.1.5", section: "CT Designated Sponsor", type: "MC", question: "What are the duties of Designated Sponsors?", options: ["Provision of additional liquidity", "Responding to quote requests by entering quotes", "Setting reference prices", "Involvement in auctions by entering quotes"], correctAnswers: [0, 1, 3] },
+      // 2.1.6 CT Price Determination
+      { id: 93, chapter: "2.1.6", section: "CT Price Determination", type: "MC", question: "In which of the following cases is the reference price considered for stipulating the auction price?", options: ["If there is a surplus of offerings, which is not caused by a market order.", "If there is a surplus of demand, which is not caused by a market order.", "If there are several possible limits and there is both an ask surplus and a bid surplus.", "If there are several possible limits and there is no surplus on hand."], correctAnswers: [0, 1, 3] },
+      { id: 94, chapter: "2.1.6", section: "CT Price Determination", type: "MC", question: "In addition to the maximum executable order volume, which of the following criteria are also used to determine the auction price:", options: ["Reference price", "Volume-weighted average of limits contained in the order book", "Surplus", "Theoretical price derived from a benchmark (e.g. EURO STOXX 50 Future)"], correctAnswers: [0, 2] },
+      { id: 95, chapter: "2.1.6", section: "CT Price Determination", type: "MC", question: "If during the call phase of an auction no price can be determined, what information is shown?", options: ["The lowest bid limit with volume", "The highest bid limit with volume", "The lowest ask limit with volume", "The highest ask limit with volume"], correctAnswers: [1, 2] },
+      { id: 96, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "What is the auction price based on the following auction order book situation? The reference price is 340. Tick Size 1 €.", options: ["339", "342", "343", "None of the above."], correctAnswers: [1] },
+      { id: 97, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "What is the auction price based on the following auction order book situation? The reference price is 340. Tick Size 1 €.", options: ["341", "340", "342", "343"], correctAnswers: [2] },
+      { id: 98, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "What is the auction price based on the following auction order book situation? The reference price is 181. Tick Size 1 €.", options: ["180", "181", "182", "None of the above."], correctAnswers: [1] },
+      { id: 99, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "Which execution(s) result(s) from the incoming market order (reference price 182) -sell 5,000 - in this order book in continuous trading?", options: ["5.000 at 178.", "5.000 at 180.", "1.500 at 180 and 3.500 at 178.", "3.500 at 180 and 1.500 at 178."], correctAnswers: [3] },
+      { id: 100, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "Which execution(s) result(s) from the incoming market order (reference price 179) - sell 5,000 - in this order book in continuous trading?", options: ["No execution - volatility interruption.", "No execution until a limit order is entered.", "Full execution of both market orders at the reference price.", "None of the above."], correctAnswers: [0] },
+      { id: 101, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "Which execution(s) result(s) from the incoming immediate-or-cancel order -sell 5,000, limit 9.10 - in this order book in continuous trading?", options: ["5,000 at 9.08.", "1,500 at 9.10.", "No execution, the order is placed in the order book.", "No execution, the order is rejected without entry in the order book."], correctAnswers: [1] },
+      { id: 102, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "Which execution(s) result(s) from the incoming limit order -buy 500, limit 23 - in this order book in continuous trading?", options: ["500 at 21.90.", "500 at 23.", "120 at 22.50, 280 at 22.95 and 100 at 23.", "100 at 22.50, 100 at 22.95 and 300 at 23."], correctAnswers: [0] },
+      { id: 103, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "Which execution(s) result(s) from the incoming fill-or-kill order - sell 5,000, limit 23 - in this order book in continuous trading?", options: ["500 at 23.", "500 at 23 and 4,500 at 22.95.", "5,000 at 22.90.", "No execution."], correctAnswers: [3] },
+      { id: 104, chapter: "2.1.6", section: "CT Price Determination", type: "SC", question: "How are market orders executed in continuous trading if they encounter an order book with only market orders on the opposite order book side?", options: ["At the highest bid or lowest ask limit in the order book.", "At the lowest bid or highest ask limit in the order book.", "At the reference price.", "None of the above."], correctAnswers: [2] },
+      // 2.1.7 On-Exchange Off-book Trading
+      { id: 105, chapter: "2.1.7", section: "Off-book Trading", type: "TF", question: "Participants require a separate admission for off-book trading.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 106, chapter: "2.1.7", section: "Off-book Trading", type: "TF", question: "Xetra EnLight Smart Respondents receive request for quotes (RfQs) when their willingness to submit an offer calculated for the specific ISIN is high.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 107, chapter: "2.1.7", section: "Off-book Trading", type: "TF", question: "Off-book transactions concluded via the T7 entry service must have a minimum volume (large-in-scale) determined by the management board of the FWB.", options: ["True", "False"], correctAnswers: [1] },
+      // 2.2.1 CA Fundamental Principles
+      { id: 108, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which of the following statements apply to the Continuous Auction with Specialist?", options: ["There is exactly one specialist per security.", "The specialist can enter orders in the securities assigned to him in his own name and, if a corresponding order exists, also on behalf of other trading participants.", "During the main trading phase, the order book is fully open to market participants (order book depth 10).", "The quote provider is able to identify the originator of an order."], correctAnswers: [0, 1, 2] },
+      { id: 109, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which of the following statements apply to the Continuous Auction with Specialist?", options: ["Execution conditions (FOK or IOC) are not supported.", "Stop orders are triggered by a matching quote.", "The matching quote is deleted after price determination.", "Only orders valid Good-for-day are permitted."], correctAnswers: [0, 1, 2] },
+      { id: 110, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which of the following statements apply to stop orders in the trading model Continuous Auction with Specialist?", options: ["A stop-loss order is triggered if the bid limit of the matching quote is equal to or below the stop limit.", "A stop-loss order is triggered when the last price is equal to or below the stop limit.", "Stop Limit and Stop Market Orders are supported.", "Stop orders in the order book are visible to all trading participants."], correctAnswers: [0, 2] },
+      { id: 111, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "In the Continuous Auction with Specialist trading model, the order book is ...", options: ["completely open during the main trading phase (order book depth 10).", "closed during the pre-trading phase.", "is partially closed during the pre-trading phase.", "is closed during the post-trading phase."], correctAnswers: [0, 3] },
+      { id: 112, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which statements apply to quotes in the Continuous Auction with Specialist?", options: ["They can have a quantity greater than or equal to zero.", "In principle, they must be double-sided (bid and ask).", "The specialist should consider fixed minimum quotation volumes and maximum spreads.", "The specialist can modify or delete standard quotes (indicative quotes)."], correctAnswers: [0, 1, 2, 3] },
+      { id: 113, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "What roles are there in the trading model Continuous auction with specialist?", options: ["Specialist", "Quote Provider", "Liquidity Provider", "Designated Sponsor"], correctAnswers: [0, 1] },
+      { id: 114, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which securities are traded in the Continuous Auction?", options: ["Mutual Funds", "Exchange Traded Funds", "Bonds", "Shares"], correctAnswers: [0, 1, 2, 3] },
+      { id: 115, chapter: "2.2.1", section: "CA Fundamentals", type: "SC", question: "Which of the following statements do not apply to the Continuous Auction?", options: ["There are several specialists per security.", "There are volatility interruptions to ensure price continuity.", "Orders are executed according to price/time priority.", "The specialist can identify the originator of an order."], correctAnswers: [0] },
+      { id: 116, chapter: "2.2.1", section: "CA Fundamentals", type: "MC", question: "Which of the following statements about the Continuous Auction with Specialist are correct?", options: ["After price determination, unexecuted parts of the specialist quote remain in the order book.", "The matching quote (binding quote) is deleted after price determination.", "The price is determined according to modified principle of highest executable volume.", "Orders in the order book are executed according to volume/time priority."], correctAnswers: [1, 2] },
+      { id: 117, chapter: "2.2.1", section: "CA Fundamentals", type: "SC", question: "How is the price determined in the Continuous Auction with Specialist?", options: ["According to the modified principle of highest executable volume exclusively to the bid or ask limit of the matching quote.", "According to the modified principle of highest executable volume corresponding to or within the price range determined by the matching quota.", "According to the modified principle of highest executable volume, only within the range determined by the matching quote.", "According to the modified principle of highest executable volume, only within the price range determined by the order book."], correctAnswers: [1] },
+      { id: 118, chapter: "2.2.1", section: "CA Fundamentals", type: "SC", question: "How are stop loss orders triggered in the Continuous Auction with Specialist?", options: ["If the ask limit of the matching quote equals or falls below the stop limit.", "If the ask limit of the matching quote equals or exceeds the stop limit.", "If the bid limit of the matching quote equals or exceeds the stop limit.", "If the bid limit of the matching quote equals or falls below the stop limit."], correctAnswers: [3] },
+      { id: 119, chapter: "2.2.1", section: "CA Fundamentals", type: "SC", question: "How are stop buy orders triggered in the Continuous Auction with Specialist?", options: ["If the bid limit of the matching quote equals or falls below the stop limit.", "If the bid limit of the matching quote equals or exceeds the stop limit.", "If the ask limit of the matching quote equals or exceeds the stop limit.", "If the ask limit of the matching quote equals or falls below the stop limit."], correctAnswers: [2] },
+      { id: 120, chapter: "2.2.1", section: "CA Fundamentals", type: "TF", question: "In the \"Continuous Auction with Specialist\" trading model, trading participants can enter a quote request for which the corresponding quote of the specialist and the order placed thereupon relate directly to each other and can be assigned to each other by means of a quote ID.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 121, chapter: "2.2.1", section: "CA Fundamentals", type: "TF", question: "The Specialist may enter orders in his own name and in the securities assigned to him for other trading participants.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 122, chapter: "2.2.1", section: "CA Fundamentals", type: "TF", question: "In the \"Continuous Auction with Specialist\" trading model, several specialists can assume the indicative quotation for a security.", options: ["True", "False"], correctAnswers: [1] },
+      // 2.2.2 CA Specialist
+      { id: 123, chapter: "2.2.2", section: "CA Specialist", type: "TF", question: "Provided that a Special Auction is scheduled, it is performed once a day.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 124, chapter: "2.2.2", section: "CA Specialist", type: "TF", question: "Specialists initiate a separate auction for orders with the trading restriction Special Auction.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 125, chapter: "2.2.2", section: "CA Specialist", type: "TF", question: "For certain securities, the specialist conducts a single auction only once a day.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 126, chapter: "2.2.2", section: "CA Specialist", type: "TF", question: "There are no Single auctions in the Continuous Auction Specialist model.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 127, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "Which statements on the transparency of the order book apply to the Continuous Auction with Specialist?", options: ["During the freeze phase the order book is fully open for the Specialist.", "During the pre-call phase the order book is partially closed for the Specialist.", "During the freeze phase the order book is completely closed.", "During the pre-call phase the order book is partially closed for trading participants."], correctAnswers: [0, 3] },
+      { id: 128, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "How are prices determined in a Continuous Auction with Specialist?", options: ["The price is determined by the trading system.", "The price determination process is triggered by the specialist entering a matching quote (binding quote).", "If there are several eligible limit steps and the consideration of the surplus does not lead to a clear auction price, the midpoint of the eligible limit steps is included as additional criterion.", "The auction price is determined on the basis of the matching quote and the order book situation stipulated at the end of the freeze phase."], correctAnswers: [0, 1, 2, 3] },
+      { id: 129, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "What statements apply to structured products when a knock-out occurs or a threshold is breached?", options: ["The ISIN is temporarily suspended from trading after the occurrence of the event.", "Once the suspension has been lifted, only sell orders can be entered until the maturity date or until the delisting of the security concerned.", "The specialist must report the event immediately.", "The specialist is only allowed to enter single-sided quotes for repurchasing the securities."], correctAnswers: [0, 1, 2, 3] },
+      { id: 130, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "Which of the following statements are applicable for Continuous Auctions with Specialist?", options: ["After the freeze phase a price determination or a phase change to the pre-call phase is possible.", "During the pre-call phase, the order book is only completely open to the specialist, i.e. the specialist can view each order and quote request and the respective originator.", "Orders that are entered during the freeze phase are stored and will enter the order book immediately after it gets unlocked.", "After price determination any remaining parts of the Specialist quote are not deleted."], correctAnswers: [0, 1, 2] },
+      { id: 131, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "For which of the following security types a Special Auction can be executed by the Specialists?", options: ["Subscription rights", "Mutual funds", "German Government Bonds", "Covered warrants"], correctAnswers: [0, 2] },
+      { id: 132, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "What kind of order types are available in the trading model continuous auction with Specialist?", options: ["Stop order", "Market-to-Limit order", "Iceberg order", "One-cancels-Other order"], correctAnswers: [0, 1] },
+      { id: 133, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "In the trading model Continuous Auction with Specialist, the Specialist is responsible for a high trading quality. Which of the following duties arise from this task?", options: ["Incoming quote requests are to be responded to without delay.", "Information that has become known in connection with the activities as a Specialist shall not be disclosed to third parties.", "Continuous provision of non-binding quotes based on the current market situation (order situation incl. reference market)", "Use of a limit control system to continuously check the executability of the orders on hand"], correctAnswers: [0, 1, 2, 3] },
+      { id: 134, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "Which statements are applicable for a freeze phase of a Continuous Auction with Specialist?", options: ["Only the Specialist quote is displayed.", "It has a random end.", "The Specialist is able to enter orders on own behalf or on behalf of other trading participants and can modify or delete these orders.", "There is no predetermined minimum period."], correctAnswers: [1, 2] },
+      { id: 135, chapter: "2.2.2", section: "CA Specialist", type: "MC", question: "Which statements are applicable for a pre-call phase of a Continuous Auction with Specialist?", options: ["Trading participants cannot enter orders.", "The order book is completely open.", "The specialist can enter, modify or delete own orders and he can enter or delete orders on behalf of other trading participants.", "The specialist may enter or delete quotes."], correctAnswers: [2, 3] },
+      { id: 136, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "What must the exchange trader acting on behalf of a specialist basically do if the expected price of a share whose last price was greater than €5.00 differs by more than 10 per cent?", options: ["Enter an adjusted standard quote (non-binding quote) and start the freeze phase (or \"call phase\" according to the Exchange Rules) only after a period of 5 minutes.", "Enter an adjusted matching quote (binding quote) and start the freeze phase only after a period of 10 minutes.", "Enter an adjusted standard quote (non-binding quote) and start the freeze phase only after a period of 15 minutes.", "Enter an adjusted standard quote (non-binding quote) and start the pre-call phase only after a period of 10 minutes."], correctAnswers: [2] },
+      { id: 137, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "What must the exchange trader acting on behalf of a Specialist consider when determining a price without turnover?", options: ["A price without turnover (PWT) quote shall only be entered after 12:00 pm CET.", "A PWT quote shall only be entered if a standard quote (non-binding quote) without volume was entered before.", "A PWT quote shall only be entered if a standard quote (non-binding quote) with volume was entered before.", "None of the above."], correctAnswers: [2] },
+      { id: 138, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "Which of the following statements are applicable for quote-request driven trading in Continuous Auction with Specialist?", options: ["If there is no adequate quote (e.g., due to lack of volume), quote requests may be rejected with a corresponding error message.", "The quote request must contain a numeric value, the so-called quote ID.", "The quote answer of the specialist and the order based upon that answer refer directly to each other and can be assigned to each other by means of the quote ID.", "All of the above."], correctAnswers: [3] },
+      { id: 139, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "Which of the following duties do not apply to an exchange trader acting on behalf of a specialist?", options: ["In the case of securities that are traded in foreign currency and settled in euros, in addition to entering the matching quote (binding quote) for conversion, an exchange rate in line with the market must be entered.", "Ensure that at least one price is determined per trading day for each security.", "If it is not possible to determine a price with turnover, a PWT price determination shall be initiated.", "In order to restart trading after a suspension, a \"Special Auction\" shall be conducted."], correctAnswers: [3] },
+      { id: 140, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "Which minimum requirements must the limit control system of the specialist fulfil?", options: ["Permanent monitoring of all new and existing orders in the order book with regard to their executability.", "Immediate display of stop loss orders if they have reached the bid limit of the standard quote (indicative quote).", "Immediate indication of the executability of orders (market and limit orders) in the order book against the standard quote (indicative quote) or against other orders.", "All of the above mentioned requirements."], correctAnswers: [3] },
+      { id: 141, chapter: "2.2.2", section: "CA Specialist", type: "SC", question: "Which entry is not possible for the Specialist during the freeze phase?", options: ["Order entry on behalf of other trading participants.", "Entry of an exchange rate.", "Own order entry", "Entry of a standard quote."], correctAnswers: [3] },
+      // 2.2.3 CA Price Determination
+      { id: 142, chapter: "2.2.3", section: "CA Price Determination", type: "TF", question: "If there is no executable order book situation, a price without turnover can be generated on the basis of the bid side of the specialist quote.", options: ["True", "False"], correctAnswers: [0] },
+      { id: 143, chapter: "2.2.3", section: "CA Price Determination", type: "TF", question: "In the Continuous Auction, the auction price is determined solely on the basis of the specialist quote.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 144, chapter: "2.2.3", section: "CA Price Determination", type: "TF", question: "If the consideration of the surplus in the Continuous Auction does not lead to a clear auction price, the reference price is used as a further criterion.", options: ["True", "False"], correctAnswers: [1] },
+      { id: 145, chapter: "2.2.3", section: "CA Price Determination", type: "SC", question: "How is the auction price determined in the Continuous Auction with Specialist?", options: ["The average value of all limits available at the end of the call Phase will be the auction price.", "Within a price range specified by Cash Markets Operations.", "Within the price range specified by the specialist's quote (including the bid/ask limit of the quote).", "Based on the specialist quote and the order book position fixed at the end of the freeze phase."], correctAnswers: [3] },
+      { id: 146, chapter: "2.2.3", section: "CA Price Determination", type: "MC", question: "How is a price without turnover determined in the specialist model?", options: ["Cash Markets Operations determines the price.", "Price determination is triggered by entering a separate quote (price-without-turnover quote).", "After entering a price-without-turnover quote, the price without turnover is generated on the basis of the bid side of the quote.", "The price is calculated from the average value of the available order limits."], correctAnswers: [1, 2] },
+      { id: 147, chapter: "2.2.3", section: "CA Price Determination", type: "MC", question: "What are the basic rules for price determination in Continuous Auction with Specialist?", options: ["The auction price is determined according to the modified principle of highest executable volume.", "The auction price is determined by the specialist.", "If no executable orders are available, it is not possible to determine an auction price with turnover.", "The auction price is determined by the trading system."], correctAnswers: [0, 2, 3] },
+      { id: 148, chapter: "2.2.3", section: "CA Price Determination", type: "SC", question: "What happens in Continuous Auction with Specialist if there is more than one limit step with the highest executable order volume and the lowest surplus?", options: ["If, for each of the limit steps, the surplus lies within the price range (including the bid and ask limits of the specialist quote) on the bid side, the auction price is calculated according to the highest of these limit steps.", "The auction price is determined by the specialist.", "No auction price can be determined.", "None of the above answers is correct."], correctAnswers: [0] },
+      { id: 149, chapter: "2.2.3", section: "CA Price Determination", type: "SC", question: "When does a Continuous Auction with Specialist result in a price without turnover?", options: ["If the price variance from the last price exceeds a certain percentage.", "If the security is suspended from trading.", "If the surplus in the order book is too large at the time of price determination.", "If a corresponding quote has been entered and there is no executable order book situation."], correctAnswers: [3] },
+      { id: 150, chapter: "2.2.3", section: "CA Price Determination", type: "SC", question: "What happens if the consideration of the surplus in a price determination of a Continuous Auction with Specialist does not lead to a clear auction price?", options: ["The reference price is used to determine the auction price.", "The auction price is determined by the specialist.", "The midpoint is calculated of the highest eligible limit step with surplus on the bid side and the lowest eligible limit step with surplus on the ask side and serves as auction price.", "None of the above answers is correct."], correctAnswers: [2] }
+    ];
+
+    // Storage helpers
+    const Storage = {
+      get: (key, defaultVal) => {
+        try {
+          const item = localStorage.getItem('fwb_' + key);
+          return item ? JSON.parse(item) : defaultVal;
+        } catch { return defaultVal; }
+      },
+      set: (key, value) => {
+        try {
+          localStorage.setItem('fwb_' + key, JSON.stringify(value));
+        } catch {}
+      }
+    };
+
+    const SCORING = { TF: { correct: 2 }, SC: { correct: 2 }, MC: { perOption: 1, maxPoints: 4 } };
+    const TYPE_INFO = {
+      TF: { name: "True/False", desc: "Judge whether the statement is true or false" },
+      SC: { name: "Single Choice", desc: "Select the ONE correct answer" },
+      MC: { name: "Multiple Choice", desc: "Select ALL correct answers" }
+    };
+
+    const shuffleArray = (array) => {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    };
+
+    function FWBQuizApp() {
+      const [mode, setMode] = useState('home');
+      const [questions, setQuestions] = useState([]);
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showAnswer, setShowAnswer] = useState(false);
+      const [filter, setFilter] = useState({ chapter: 'all', type: 'all' });
+      const [examTime, setExamTime] = useState(30 * 60); // 30 minutes for FWB
+      const [examStarted, setExamStarted] = useState(false);
+      const [bookmarked, setBookmarked] = useState(() => new Set(Storage.get('bookmarks', [])));
+      const [stats, setStats] = useState(() => Storage.get('stats', { studied: 0, exams: 0, bestScore: 0 }));
+      const [showInstall, setShowInstall] = useState(false);
+      const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+      useEffect(() => {
+        const handler = (e) => { e.preventDefault(); setDeferredPrompt(e); setShowInstall(true); };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+      }, []);
+
+      const installApp = async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') setShowInstall(false);
+          setDeferredPrompt(null);
+        }
+      };
+
+      useEffect(() => { Storage.set('bookmarks', [...bookmarked]); }, [bookmarked]);
+      useEffect(() => { Storage.set('stats', stats); }, [stats]);
+
+      const chapters = useMemo(() => [...new Set(questionsData.map(q => q.chapter))].sort(), []);
+
+      const filteredQuestions = useMemo(() => {
+        return questionsData.filter(q => {
+          if (filter.chapter !== 'all' && q.chapter !== filter.chapter) return false;
+          if (filter.type !== 'all' && q.type !== filter.type) return false;
+          return true;
+        });
+      }, [filter]);
+
+      useEffect(() => {
+        let timer;
+        if (mode === 'exam' && examStarted && examTime > 0) {
+          timer = setInterval(() => {
+            setExamTime(prev => {
+              if (prev <= 1) { clearInterval(timer); setMode('results'); return 0; }
+              return prev - 1;
+            });
+          }, 1000);
+        }
+        return () => clearInterval(timer);
+      }, [mode, examStarted, examTime]);
+
+      const startStudy = () => {
+        setQuestions(filteredQuestions);
+        setCurrentIndex(0);
+        setAnswers({});
+        setShowAnswer(false);
+        setMode('study');
+        setStats(s => ({ ...s, studied: s.studied + 1 }));
+      };
+
+      const startExam = () => {
+        const shuffled = shuffleArray(questionsData);
+        setQuestions(shuffled.slice(0, 50)); // 50 questions for FWB exam
+        setCurrentIndex(0);
+        setAnswers({});
+        setShowAnswer(false);
+        setExamTime(30 * 60); // 30 minutes
+        setExamStarted(true);
+        setMode('exam');
+        setStats(s => ({ ...s, exams: s.exams + 1 }));
+      };
+
+      const handleAnswer = (optionIndex) => {
+        const q = questions[currentIndex];
+        const currentAnswers = answers[q.id] || [];
+        if (q.type === 'TF' || q.type === 'SC') {
+          setAnswers({ ...answers, [q.id]: [optionIndex] });
+        } else {
+          const newAnswers = currentAnswers.includes(optionIndex)
+            ? currentAnswers.filter(i => i !== optionIndex)
+            : [...currentAnswers, optionIndex];
+          setAnswers({ ...answers, [q.id]: newAnswers });
+        }
+      };
+
+      const calculateQuestionScore = (question, userAnswers) => {
+        const correct = question.correctAnswers;
+        const user = userAnswers || [];
+        if (question.type === 'TF' || question.type === 'SC') {
+          return user.length === 1 && correct.includes(user[0]) ? SCORING[question.type].correct : 0;
+        } else {
+          let score = 0;
+          for (let i = 0; i < question.options.length; i++) {
+            const shouldTick = correct.includes(i);
+            const didTick = user.includes(i);
+            if (shouldTick === didTick) score += 1;
+            else score -= 1;
+          }
+          return Math.max(0, Math.min(score, SCORING.MC.maxPoints));
+        }
+      };
+
+      const calculateResults = () => {
+        let totalScore = 0, maxScore = 0, correct = 0, partial = 0, incorrect = 0;
+        questions.forEach(q => {
+          const userAnswer = answers[q.id] || [];
+          const score = calculateQuestionScore(q, userAnswer);
+          const maxQ = q.type === 'MC' ? SCORING.MC.maxPoints : SCORING[q.type].correct;
+          totalScore += score;
+          maxScore += maxQ;
+          if (score === maxQ) correct++;
+          else if (score > 0) partial++;
+          else incorrect++;
+        });
+        const percentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+        const passed = percentage >= 75;
+        if (mode === 'exam' && percentage > stats.bestScore) {
+          setStats(s => ({ ...s, bestScore: Math.round(percentage) }));
+        }
+        return { totalScore, maxScore, percentage, passed, correct, partial, incorrect };
+      };
+
+      const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+      };
+
+      const toggleBookmark = (id) => {
+        const newBookmarks = new Set(bookmarked);
+        if (newBookmarks.has(id)) newBookmarks.delete(id);
+        else newBookmarks.add(id);
+        setBookmarked(newBookmarks);
+      };
+
+      const goTo = (index) => { setCurrentIndex(index); setShowAnswer(false); };
+
+      const currentQuestion = questions[currentIndex];
+      const userAnswer = currentQuestion ? (answers[currentQuestion.id] || []) : [];
+
+      return (
+        <div style={{ minHeight: '100vh', paddingBottom: 'env(safe-area-inset-bottom, 20px)' }}>
+          
+          {showInstall && (
+            <div className="install-banner">
+              <div>
+                <strong>Install App</strong>
+                <div style={{ fontSize: 13, opacity: 0.8 }}>Add to home screen for offline use</div>
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button onClick={() => setShowInstall(false)} style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: 14, cursor: 'pointer' }}>Later</button>
+                <button onClick={installApp} className="btn" style={{ padding: '8px 16px', background: '#0a0a0f', color: '#ff6b35' }}>Install</button>
+              </div>
+            </div>
+          )}
+
+          {mode === 'home' && (
+            <div style={{ maxWidth: 500, margin: '0 auto', padding: '40px 20px' }}>
+              <div style={{ textAlign: 'center', marginBottom: 40 }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>🏛</div>
+                <h1 style={{ fontSize: 26, fontWeight: 700, marginBottom: 8 }}>
+                  <span className="gradient-text">FWB Trader Exam</span>
+                </h1>
+                <p style={{ color: '#888', fontSize: 14 }}>150 Official Questions • Börse Frankfurt</p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 32 }}>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#ff6b35' }}>150</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Questions</div>
+                </div>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#00ff88' }}>{stats.exams}</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Exams Taken</div>
+                </div>
+                <div className="stat-card">
+                  <div style={{ fontSize: 24, fontWeight: 700, color: '#ffd700' }}>{stats.bestScore}%</div>
+                  <div style={{ fontSize: 11, color: '#888' }}>Best Score</div>
+                </div>
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 16 }}>
+                <h2 style={{ fontSize: 18, marginBottom: 16 }}>📚 Study Mode</h2>
+                <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+                  <select value={filter.chapter} onChange={e => setFilter({...filter, chapter: e.target.value})} style={{ flex: 1, minWidth: 120 }}>
+                    <option value="all">All Chapters</option>
+                    <option value="1.1">1.1 Exchange Rules I</option>
+                    <option value="1.2">1.2 Exchange Rules II</option>
+                    <option value="1.3">1.3 Exchange Rules III</option>
+                    <option value="1.4">1.4 Conditions</option>
+                    <option value="1.5">1.5 Off-book Trading</option>
+                    <option value="1.6">1.6 Unofficial Market</option>
+                    <option value="2.1.1">2.1.1 CT Fundamentals</option>
+                    <option value="2.1.2">2.1.2 CT Trading Process</option>
+                    <option value="2.1.3">2.1.3 CT Orders</option>
+                    <option value="2.1.4">2.1.4 CT Safeguards</option>
+                    <option value="2.1.5">2.1.5 CT Designated Sponsor</option>
+                    <option value="2.1.6">2.1.6 CT Price Determination</option>
+                    <option value="2.1.7">2.1.7 Off-book Trading</option>
+                    <option value="2.2.1">2.2.1 CA Fundamentals</option>
+                    <option value="2.2.2">2.2.2 CA Specialist</option>
+                    <option value="2.2.3">2.2.3 CA Price Determination</option>
+                  </select>
+                  <select value={filter.type} onChange={e => setFilter({...filter, type: e.target.value})} style={{ flex: 1, minWidth: 100 }}>
+                    <option value="all">All Types</option>
+                    <option value="TF">True/False</option>
+                    <option value="SC">Single Choice</option>
+                    <option value="MC">Multiple Choice</option>
+                  </select>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#888', fontSize: 14 }}>{filteredQuestions.length} questions</span>
+                  <button className="btn btn-primary" onClick={startStudy}>Start →</button>
+                </div>
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 16 }}>
+                <h2 style={{ fontSize: 18, marginBottom: 8 }}>🎯 Exam Simulation</h2>
+                <p style={{ color: '#888', fontSize: 14, marginBottom: 16 }}>50 questions • 30 minutes • 75% to pass</p>
+                <button className="btn btn-primary" onClick={startExam} style={{ width: '100%' }}>Start Exam →</button>
+              </div>
+
+              {bookmarked.size > 0 && (
+                <div className="card" style={{ padding: 24 }}>
+                  <h2 style={{ fontSize: 18, marginBottom: 8 }}>⭐ Bookmarked</h2>
+                  <p style={{ color: '#888', fontSize: 14, marginBottom: 16 }}>{bookmarked.size} saved questions</p>
+                  <button className="btn btn-secondary" onClick={() => {
+                    setQuestions(questionsData.filter(q => bookmarked.has(q.id)));
+                    setCurrentIndex(0); setAnswers({}); setShowAnswer(false); setMode('study');
+                  }} style={{ width: '100%' }}>Review Bookmarks →</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {(mode === 'study' || mode === 'exam') && currentQuestion && (
+            <div style={{ maxWidth: 600, margin: '0 auto', padding: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <button className="btn btn-secondary" onClick={() => setMode('home')} style={{ padding: '10px 16px' }}>← Back</button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  {mode === 'exam' && (
+                    <div className={`timer ${examTime < 60 ? 'danger' : examTime < 300 ? 'warning' : ''}`}>
+                      ⏱ {formatTime(examTime)}
+                    </div>
+                  )}
+                  <span style={{ color: '#888' }}>{currentIndex + 1}/{questions.length}</span>
+                </div>
+              </div>
+
+              <div className="progress-bar" style={{ marginBottom: 20 }}>
+                <div className="progress-fill" style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }} />
+              </div>
+
+              <div className="card" style={{ padding: 24, marginBottom: 20 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <span className={`tag tag-${currentQuestion.type.toLowerCase()}`}>{currentQuestion.type}</span>
+                    <span style={{ color: '#666', fontSize: 12 }}>{currentQuestion.chapter}</span>
+                  </div>
+                  <button onClick={() => toggleBookmark(currentQuestion.id)} style={{ background: 'none', border: 'none', fontSize: 24, cursor: 'pointer', padding: 0 }}>
+                    {bookmarked.has(currentQuestion.id) ? '⭐' : '☆'}
+                  </button>
+                </div>
+
+                <h2 style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.5, marginBottom: 6 }}>
+                  Q{currentQuestion.id}. {currentQuestion.question}
+                </h2>
+                <p style={{ color: '#666', fontSize: 12, marginBottom: 24 }}>{TYPE_INFO[currentQuestion.type].desc}</p>
+
+                <div>
+                  {currentQuestion.options.map((option, idx) => {
+                    const isSelected = userAnswer.includes(idx);
+                    const isCorrect = currentQuestion.correctAnswers.includes(idx);
+                    const showResult = showAnswer && mode === 'study';
+                    let className = 'option';
+                    if (isSelected && !showResult) className += ' selected';
+                    if (showResult && isCorrect) className += ' correct';
+                    if (showResult && isSelected && !isCorrect) className += ' incorrect';
+
+                    return (
+                      <div key={idx} className={className} onClick={() => !showAnswer && handleAnswer(idx)}>
+                        <div className={`${currentQuestion.type === 'MC' ? 'checkbox' : 'radio'} ${isSelected ? 'checked' : ''}`}>
+                          {isSelected && <span style={{ color: '#fff', fontWeight: 700 }}>✓</span>}
+                        </div>
+                        <span style={{ fontSize: 15, lineHeight: 1.4 }}>{option}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+                <button className="btn btn-secondary" onClick={() => goTo(currentIndex - 1)} disabled={currentIndex === 0} style={{ opacity: currentIndex === 0 ? 0.4 : 1, flex: 1 }}>← Prev</button>
+                {mode === 'study' && !showAnswer && (
+                  <button className="btn btn-secondary" onClick={() => setShowAnswer(true)} style={{ flex: 1 }}>Check</button>
+                )}
+                {currentIndex === questions.length - 1 ? (
+                  <button className="btn btn-primary" onClick={() => setMode('results')} style={{ flex: 1 }}>{mode === 'exam' ? 'Submit' : 'Results'} →</button>
+                ) : (
+                  <button className="btn btn-primary" onClick={() => goTo(currentIndex + 1)} style={{ flex: 1 }}>Next →</button>
+                )}
+              </div>
+
+              <div className="card" style={{ padding: 16 }}>
+                <div style={{ fontSize: 12, color: '#888', marginBottom: 10 }}>Questions</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                  {questions.map((q, idx) => (
+                    <div key={q.id} className={`nav-dot ${idx === currentIndex ? 'current' : ''} ${answers[q.id]?.length ? 'answered' : ''} ${bookmarked.has(q.id) ? 'bookmarked' : ''}`} onClick={() => goTo(idx)}>
+                      {idx + 1}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {mode === 'results' && (
+            <div style={{ maxWidth: 500, margin: '0 auto', padding: '40px 20px' }}>
+              {(() => {
+                const results = calculateResults();
+                return (
+                  <>
+                    <div style={{ textAlign: 'center', marginBottom: 40 }}>
+                      <div style={{ fontSize: 64, marginBottom: 12 }}>{results.passed ? '🎉' : '📚'}</div>
+                      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8, color: results.passed ? '#00ff88' : '#ff4757' }}>
+                        {results.passed ? 'Passed!' : 'Keep Practicing'}
+                      </h1>
+                      <p style={{ color: '#888' }}>{results.passed ? 'Great work!' : 'You need 75% to pass'}</p>
+                    </div>
+
+                    <div className="card" style={{ padding: 24, marginBottom: 20 }}>
+                      <div style={{ textAlign: 'center', marginBottom: 24 }}>
+                        <div style={{ fontSize: 56, fontWeight: 700, color: results.passed ? '#00ff88' : '#ff4757' }}>
+                          {results.percentage.toFixed(1)}%
+                        </div>
+                        <div style={{ color: '#888' }}>{results.totalScore} / {results.maxScore} points</div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(0, 255, 136, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#00ff88' }}>{results.correct}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Correct</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(255, 215, 0, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#ffd700' }}>{results.partial}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Partial</div>
+                        </div>
+                        <div style={{ textAlign: 'center', padding: 12, background: 'rgba(255, 71, 87, 0.1)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 24, fontWeight: 700, color: '#ff4757' }}>{results.incorrect}</div>
+                          <div style={{ fontSize: 11, color: '#888' }}>Wrong</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 12 }}>
+                      <button className="btn btn-secondary" onClick={() => setMode('home')} style={{ flex: 1 }}>Home</button>
+                      <button className="btn btn-primary" onClick={startExam} style={{ flex: 1 }}>Try Again →</button>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<FWBQuizApp />);
+  </script>
+</body>
+</html>
