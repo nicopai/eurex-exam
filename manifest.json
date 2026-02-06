@@ -2,7 +2,7 @@
   "name": "Eurex Trader Exam",
   "short_name": "Eurex Exam",
   "description": "Practice for the Eurex Trader Exam with all 105 official questions",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
